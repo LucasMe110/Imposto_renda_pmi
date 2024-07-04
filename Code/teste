@@ -1,0 +1,21 @@
+{
+pedidos:[
+   _id: POST_ID,
+   quantidade: QUANTIDADE_DO_PRODUTO
+   produtos: [  
+      {
+         nome: NOME_DO_PRODUTO,
+	      preco: PRECO_PRODUTO,
+	      categoria: CATEGORIA,
+	      estoque: QUANTIDADE_EM_ESTOQUE
+      },
+            ]
+   clientes: [  
+      {
+         nome: NOME_CLIENTE,
+	      email: EMAIL_CLIENTE,
+	      telefone: TELEFONE_CLIENTE
+      },
+   ]
+]
+}
