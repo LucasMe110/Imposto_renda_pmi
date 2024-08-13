@@ -1,11 +1,11 @@
 import smtplib
 from email.message import EmailMessage
 
-async def send_verification_email(email, codigo_aleatorio):
+def send_verification_email(email, codigo_aleatorio):
     msg = EmailMessage()
     msg['Subject'] = 'Código de Verificação'
-    msg['From'] = 'lucasmellomo@gmail.com'  
-    msg['To'] = email  
+    msg['From'] = 'lucasmellomo@gmail.com'
+    msg['To'] = email
 
     html_content = f"""
     <html>
@@ -19,7 +19,7 @@ async def send_verification_email(email, codigo_aleatorio):
     try:
         smtp_server = 'smtp.gmail.com'
         smtp_port = 587
-        smtp_username = 'lucasmellomo@gmail.com'  
+        smtp_username = 'lucasmellomo@gmail.com'
         smtp_password = 'xazg ocoq ywil ropc'  # Senha de aplicativo
 
         server = smtplib.SMTP(smtp_server, smtp_port)

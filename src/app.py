@@ -1,11 +1,11 @@
 import re
 import random
-import asyncio
 from flask import Flask, render_template, request, url_for, redirect, flash, session
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.exc import IntegrityError
 from send_verification_email import send_verification_email
 from cpf_validator import cpf_validador  # Importa a função de validação de CPF
+from senha_valida import validar_senha
 
 app = Flask(__name__, template_folder='templates')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:12345@localhost:3306/Teste'
@@ -47,6 +47,9 @@ def add():
         if Usuario.query.filter_by(cpf=cpf).first():
             return render_template('index.html', cpf_existente="Esse CPF já foi usado")
 
+        if not validar_senha(senha):
+            return render_template('index.html', senha_erro="Senha não atende os criterios de segurança ")
+        
         # Salvar dados na sessão
         session['nome'] = nome
         session['senha'] = senha
@@ -97,7 +100,7 @@ def verify_email():
         celular = session.get('celular')
         cpf = session.get('cpf')
         codigo_aleatorio = str(random.randint(1000, 9999))
-        asyncio.run(send_verification_email(email, codigo_aleatorio))
+        send_verification_email(email, codigo_aleatorio)  # Chamada síncrona
         session['codigo_aleatorio'] = codigo_aleatorio
 
     return render_template('verify_email.html', email=email, nome=nome, senha=senha, celular=celular, cpf=cpf)
