@@ -1,6 +1,7 @@
-#Mello 'mysql://root:12345@localhost:3306/Teste'
+#Lucas 'mysql://root:12345@localhost:3306/Teste'
 #Pedro 'mysql://root:12345pedro.@localhost:3306/meubancodedados'
-
+#Nicolas
+#Lduardo
 
 #      'banco://root:senha@localhost:porta(padrao 3306)/banco que deseja usar'
 
