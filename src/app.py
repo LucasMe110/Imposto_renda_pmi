@@ -24,7 +24,7 @@ class Usuario(db.Model):
 @app.route("/")
 def index():
     usuarios = Usuario.query.all()
-    return render_template('index.html', usuarios=usuarios)
+    return render_template('user_creat.html', usuarios=usuarios)
 
 @app.route('/add', methods=['POST'])
 def add():
@@ -37,18 +37,18 @@ def add():
 
         # Validar o email com regex
         if not re.match(r'.*@.*\.(com|edu|gov|org)(\.br)?$', email):
-            return render_template('index.html', email_erro="E-mail inválido")
+            return render_template('user_creat.html', email_erro="E-mail inválido")
 
         # Validar o CPF usando a função cpf_validador
         if not cpf_validador(cpf):
-            return render_template('index.html', cpf_invalido="CPF inválido")
+            return render_template('user_creat.html', cpf_invalido="CPF inválido")
 
         # Verificar se já existe um usuário com o mesmo CPF
         if Usuario.query.filter_by(cpf=cpf).first():
-            return render_template('index.html', cpf_existente="Esse CPF já foi usado")
+            return render_template('user_creat.html', cpf_existente="Esse CPF já foi usado")
 
         if not validar_senha(senha):
-            return render_template('index.html', senha_erro="Senha não atende os criterios de segurança ")
+            return render_template('user_creat.html', senha_erro="Senha não atende os criterios de segurança ")
         
         # Salvar dados na sessão
         session['nome'] = nome
