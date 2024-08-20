@@ -3,7 +3,7 @@ import os
 from quebrar_binario import quebrar_em_binario
 
 # Caminho absoluto para a imagem original
-caminho_imagem = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'cu.png'))
+caminho_imagem = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'test.png'))
 # Caminho para salvar a imagem reconstruída
 caminho_saida = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'imagem_reconstruida.png'))
 
