@@ -1,4 +1,4 @@
-# NOME-PMI
+# Contabilize Bem - PMI
 
 ## Install
 
