@@ -8,7 +8,7 @@ from cpf_validator import cpf_validador  # Importa a função de validação de 
 from senha_valida import validar_senha
 
 app = Flask(__name__, template_folder='templates')
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mssql+pyodbc://sa:Nicolas12345@localhost:1433/pmifinal?driver=ODBC+Driver+17+for+SQL+Server'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:12345@localhost:3306/Teste'
 app.secret_key = 'sua_chave_secreta'  # Necessário para utilizar o flash
 
 db = SQLAlchemy(app)
