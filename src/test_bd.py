@@ -1,28 +1,25 @@
-#Lucas 'mysql://root:12345@localhost:3306/Teste'
-#Pedro 'mysql://root:12345pedro.@localhost:3306/meubancodedados'
-#Nicolas
-#Eduardo 
-
-#      'banco://root:senha@localhost:porta(padrao 3306)/banco que deseja usar'
-
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 from sqlalchemy.exc import SQLAlchemyError
-
-#pip install pymysql
-
 
 def test_connection():
     try:
-        # Configuração da conexão com o driver pymysql
-        DATABASE_URI = 'mysql+pymysql://root:12345@localhost:3306/Teste'
+        # Configuração da conexão com o driver pyodbc para SQL Server
+        DATABASE_URI = 'mssql+pyodbc://sa:Nicolas12345@localhost:1433/pmifinal?driver=ODBC+Driver+17+for+SQL+Server'
         engine = create_engine(DATABASE_URI)
 
         # Tentativa de conectar
         with engine.connect() as connection:
-            print("Conexão bem-sucedida com o banco de dados MySQL!")
-            result = connection.execute("SELECT DATABASE();")
-            db_name = result.fetchone()
-            print(f"Conectado ao banco de dados: {db_name[0]}")
+            print("Conexão bem-sucedida com o banco de dados SQL Server!")
+
+            # Executando uma consulta SQL
+            result = connection.execute(text("SELECT DB_NAME()"))
+            db_name = result.scalar()
+            print(f"Conectado ao banco de dados: {db_name}")
+
+            # Executando outra consulta SQL
+            result = connection.execute(text("SELECT GETDATE()"))
+            current_time = result.scalar()
+            print(f"Current time: {current_time}")
 
     except SQLAlchemyError as e:
         print(f"Erro ao conectar ao banco de dados: {e}")
