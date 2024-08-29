@@ -74,14 +74,15 @@
             width: 100%;
         }
         .password-container i {
-            position: absolute;
-            right: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            cursor: pointer;
-            font-size: 16px;
-            color: rgba(68, 73, 79, 1);
-        }
+    position: absolute;
+    right: -10px;
+    top: 31%; /* Centraliza o ícone verticalmente em relação ao container */
+    transform: translateY(-30%); /* Move o ícone um pouco mais para baixo */
+    cursor: pointer;
+    font-size: 16px;
+    color: rgba(68, 73, 79, 1);
+}
+
 
         .e23_198 {
             color: rgba(255, 255, 255, 1);
@@ -169,14 +170,32 @@
                 left: 50%; /* Centralizando horizontalmente */
                 transform: translateX(-50%); /* Ajustando para ficar no centro */
             }
+            .image-container {
+    display: flex;
+    justify-content: center; /* Centraliza as imagens horizontalmente */
+    align-items: center; /* Centraliza as imagens verticalmente se necessário */
+    gap: 200px; /* Espaçamento entre as imagens, ajuste conforme necessário */
+    /* Adicione margens ou padding se precisar de espaçamento adicional ao redor do contêiner */
+}
+
+.imagem-centralizada {
+    max-width: 100%; /* Garante que as imagens não ultrapassem o tamanho do contêiner */
+    height: auto; /* Mantém a proporção das imagens */
+    /* Adicione margens ou padding se precisar de espaçamento adicional em torno das imagens */
+}
+
+            
+
         }
+
+        
     </style>
 </head>
 <body>
     <div class="e23_16">
         <span class="e23_17">Contabilize Bem</span>
-        <div class="e23_189"></div>
-        <div class="e23_190"></div>
+        <div class="e23_189"><img src="imagem_login/image 4.png" alt="Descrição da Imagem" class="imagem-centralizada" /></div>
+        <div class="e23_190"><img src="imagem_login/image 5.png" alt="Descrição da Imagem" class="imagem-centralizada" /></div>
         <div class="e23_191">
             <input type="email" class="input-field" placeholder="E-mail">
             
@@ -184,6 +203,7 @@
             <div class="password-container">
                 <input type="password" id="password" class="input-field" placeholder="Senha">
                 <i class="far fa-eye" id="togglePassword"></i>
+                
             </div>
         </div>
         <span class="e23_198">Entrar</span>
@@ -192,19 +212,31 @@
         <button class="e23_200">Entrar</button>
     </div>
 
+    <div class="image-container">
+        <div class="e23_189"></div>
+        <div class="e23_190"></div>
+    </div>
+    
+    
+
+
+    
+    
+
     <script>
-        const password = document.getElementById('password');
-        const togglePassword = document.getElementById('togglePassword');
+       const password = document.getElementById('password');
+const togglePassword = document.getElementById('togglePassword');
 
-        togglePassword.addEventListener('click', function () {
-            // Alterna o tipo de input entre 'password' e 'text'
-            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-            password.setAttribute('type', type);
+togglePassword.addEventListener('click', function () {
+    // Alterna o tipo de input entre 'password' e 'text'
+    const isPasswordVisible = password.getAttribute('type') === 'password';
+    password.setAttribute('type', isPasswordVisible ? 'text' : 'password');
 
-            // Alterna o ícone entre 'eye' e 'eye-slash'
-            this.classList.toggle('fa-eye');
-            this.classList.toggle('fa-eye-slash');
-        });
+    // Define o ícone correto com base na visibilidade da senha
+    this.classList.toggle('fa-eye', isPasswordVisible);  // Mostra o olho aberto se a senha for visível
+    this.classList.toggle('fa-eye-slash', !isPasswordVisible); // Mostra o olho fechado se a senha não for visível
+});
+
     </script>
 </body>
 </html>
