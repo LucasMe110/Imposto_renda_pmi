@@ -1,24 +1,10 @@
+# src/send_verification_email.py
+
+from services.email_service import criar_mensagem_email
 import smtplib
-from email.message import EmailMessage
 
 def send_verification_email(email, codigo_aleatorio):
-    msg = EmailMessage()
-    msg['Subject'] = 'Código de Verificação - Contabilize Bem'
-    msg['From'] = 'lucasmellomo@gmail.com'
-    msg['To'] = email
-
-    html_content = f"""
-    <html>
-        <body>
-            <p>Oi! Você recebeu este e-mail da <b>Contabilize Bem</b>.</p>
-            <p>Seu código de verificação é: <b style="font-size: 24px;">{codigo_aleatorio}</b></p>
-            <p>Se você não reconhece este e-mail, por favor, ignore-o.</p>
-            <p>Obrigado,</p>
-            <p><b>Contabilize Bem</b></p>
-        </body>
-    </html>
-    """
-    msg.add_alternative(html_content, subtype='html')
+    msg = criar_mensagem_email(email, codigo_aleatorio)
 
     try:
         smtp_server = 'smtp.gmail.com'
@@ -26,13 +12,14 @@ def send_verification_email(email, codigo_aleatorio):
         smtp_username = 'lucasmellomo@gmail.com'
         smtp_password = 'xazg ocoq ywil ropc'  # Senha de aplicativo
 
-        server = smtplib.SMTP(smtp_server, smtp_port)
-        server.starttls()
-        server.login(smtp_username, smtp_password)
-        server.send_message(msg)
-        server.quit()
-
-        print(f'E-mail enviado para {email} com sucesso.')
+        with smtplib.SMTP(smtp_server, smtp_port) as server:
+            print("Conectando ao servidor SMTP...")
+            server.starttls()
+            print("Iniciando TLS...")
+            server.login(smtp_username, smtp_password)
+            print("Autenticado com sucesso...")
+            server.send_message(msg)
+            print(f'E-mail enviado para {email} com sucesso.')
 
     except Exception as e:
         print(f'Erro ao enviar e-mail: {e}')

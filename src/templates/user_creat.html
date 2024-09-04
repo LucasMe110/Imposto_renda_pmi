@@ -27,8 +27,7 @@
             {% if email_erro != '' %}
             <strong>{{ email_erro }}</strong>
             {% endif %}
-        </div>{% with messages = get_flashed_messages(with_categories=true) %}
-
+        </div>
 
         <div>
             <input type="text" name="cpf" id="cpf" placeholder="CPF" class="form-control">
@@ -42,6 +41,8 @@
         <div>
             <button>Enviar</button>
         </div>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
         <ul class=flashes>
             {% for category, message in messages %}
