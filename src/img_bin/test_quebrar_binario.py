@@ -1,6 +1,6 @@
 # src/test_quebrar_binario.py
 import os
-from quebrar_binario import quebrar_em_binario
+from img_bin.quebrar_binario import quebrar_em_binario
 
 # Caminho absoluto para a imagem original
 caminho_imagem = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'test.png'))
