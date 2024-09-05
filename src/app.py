@@ -9,12 +9,7 @@ from config.config import Config
 import random
 
 app = Flask(__name__, template_folder='templates')
-<<<<<<< HEAD
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mssql+pyodbc://sa:Nicolas12345@localhost:1433/pmifinal?driver=ODBC+Driver+17+for+SQL+Server'
-app.secret_key = 'sua_chave_secreta'  # Necessário para utilizar o flash
-=======
 app.config.from_object(Config)
->>>>>>> bfdc1450f9489a7ebf2eb575beb9151ba806d9fb
 
 # Inicialize a instância do SQLAlchemy com a aplicação Flask
 db.init_app(app)
