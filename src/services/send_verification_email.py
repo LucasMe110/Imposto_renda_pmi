@@ -1,5 +1,3 @@
-# src/send_verification_email.py
-
 from services.email_service import criar_mensagem_email
 import smtplib
 
@@ -9,8 +7,8 @@ def send_verification_email(email, codigo_aleatorio):
     try:
         smtp_server = 'smtp.gmail.com'
         smtp_port = 587
-        smtp_username = 'lucasmellomo@gmail.com'
-        smtp_password = 'xazg ocoq ywil ropc'  # Senha de aplicativo
+        smtp_username = 'equipe.contabilizebem@gmail.com'
+        smtp_password = 'bagl tppt iffj dfyt'  # Senha de aplicativo
 
         with smtplib.SMTP(smtp_server, smtp_port) as server:
             print("Conectando ao servidor SMTP...")

@@ -4,7 +4,7 @@ from flask import Flask, render_template, request, url_for, redirect, flash, ses
 from flask_sqlalchemy import SQLAlchemy
 from models.usuario import db, Usuario  # Importe a instância de db e o modelo
 from forms.validators import validar_formulario, salvar_dados_na_sessao, salvar_usuario_no_bd
-from send_verification_email import send_verification_email  # Importa corretamente a função
+from services.send_verification_email import send_verification_email  # Importa corretamente a função
 from config.config import Config
 import random
 
