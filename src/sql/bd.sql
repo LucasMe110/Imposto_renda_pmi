@@ -8,25 +8,6 @@ CREATE TABLE Usuario (
     cpf VARCHAR(20) UNIQUE NOT NULL
 );
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 -- Criação da Tabela Categoria
 CREATE TABLE Categoria (
     id_categoria INT AUTO_INCREMENT PRIMARY KEY,

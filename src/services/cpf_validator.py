@@ -1,8 +1,6 @@
 import re
 import numpy as np
 
-
-
 def cpf_validador(cpf: str):
     cpf_numerico = re.sub("[^0-9]", "", cpf)
     cpf_como_np = np.array([int(i)for i in cpf_numerico])
@@ -15,23 +13,3 @@ def cpf_validador(cpf: str):
     else:
         cpfvali=False
     return cpfvali
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-#cpf_validador("127.950.499-45")
-#cpf_validador("12795049945")
-
-

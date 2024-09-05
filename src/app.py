@@ -1,25 +1,26 @@
-import re
-import random
+# src/app.py
+
 from flask import Flask, render_template, request, url_for, redirect, flash, session
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.exc import IntegrityError
-from send_verification_email import send_verification_email
-from cpf_validator import cpf_validador  # Importa a função de validação de CPF
-from senha_valida import validar_senha
+from models.usuario import db, Usuario  # Importe a instância de db e o modelo
+from forms.validators import validar_formulario, salvar_dados_na_sessao, salvar_usuario_no_bd
+from services.send_verification_email import send_verification_email  # Importa corretamente a função
+from config.config import Config
+import random
 
 app = Flask(__name__, template_folder='templates')
+<<<<<<< HEAD
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mssql+pyodbc://sa:Nicolas12345@localhost:1433/pmifinal?driver=ODBC+Driver+17+for+SQL+Server'
 app.secret_key = 'sua_chave_secreta'  # Necessário para utilizar o flash
+=======
+app.config.from_object(Config)
+>>>>>>> bfdc1450f9489a7ebf2eb575beb9151ba806d9fb
 
-db = SQLAlchemy(app)
+# Inicialize a instância do SQLAlchemy com a aplicação Flask
+db.init_app(app)
 
-class Usuario(db.Model):
-    id_usuario = db.Column('id_usuario', db.Integer, primary_key=True, autoincrement=True)
-    nome = db.Column(db.String(150))
-    senha = db.Column(db.String(150))
-    celular = db.Column(db.VARCHAR(17))
-    email = db.Column(db.String(150))
-    cpf = db.Column(db.String(150), unique=True)
+with app.app_context():
+    db.create_all()
 
 @app.route("/")
 def index():
@@ -35,75 +36,35 @@ def add():
         email = request.form['email']
         cpf = request.form['cpf']
 
-        # Validar o email com regex
-        if not re.match(r'.*@.*\.(com|edu|gov|org)(\.br)?$', email):
-            return render_template('user_creat.html', email_erro="E-mail inválido")
+        erros = validar_formulario(nome, senha, celular, email, cpf)
 
-        # Validar o CPF usando a função cpf_validador
-        if not cpf_validador(cpf):
-            return render_template('user_creat.html', cpf_invalido="CPF inválido")
+        if erros:
+            return render_template('user_creat.html', **erros)
 
-        # Verificar se já existe um usuário com o mesmo CPF
-        if Usuario.query.filter_by(cpf=cpf).first():
-            return render_template('user_creat.html', cpf_existente="Esse CPF já foi usado")
-
-        if not validar_senha(senha):
-            return render_template('user_creat.html', senha_erro="Senha não atende os criterios de segurança ")
-        
-        # Salvar dados na sessão
-        session['nome'] = nome
-        session['senha'] = senha
-        session['celular'] = celular
-        session['email'] = email
-        session['cpf'] = cpf
-
-        # Redirecionar para a página de verificação de email
+        salvar_dados_na_sessao(nome, senha, celular, email, cpf)
         return redirect(url_for('verify_email'))
 
 @app.route('/verify_email', methods=['POST', 'GET'])
 def verify_email():
     if request.method == 'POST':
-        email = session.get('email')
-        codigo_aleatorio = session.get('codigo_aleatorio')
         codigo_inserido = request.form['codigo']
-
-        if codigo_inserido == codigo_aleatorio:
-            nome = session.get('nome')
-            senha = session.get('senha')
-            celular = session.get('celular')
-            cpf = session.get('cpf')
-
-            usuario = Usuario(
-                nome=nome,
-                senha=senha,
-                celular=celular,
-                email=email,
-                cpf=cpf
-            )
-
-            db.session.add(usuario)
-            try:
-                db.session.commit()
-                flash("Usuário cadastrado com sucesso!", 'success')
+        if codigo_inserido == session.get('codigo_aleatorio'):
+            if salvar_usuario_no_bd():
                 return redirect(url_for('index'))
-            except IntegrityError:
-                db.session.rollback()
-                flash("Erro ao cadastrar usuário.", 'error')
-
         else:
             flash('Código de verificação incorreto.', 'error')
-
     else:
         email = session.get('email')
-        nome = session.get('nome')
-        senha = session.get('senha')
-        celular = session.get('celular')
-        cpf = session.get('cpf')
-        codigo_aleatorio = str(random.randint(1000, 9999))
-        send_verification_email(email, codigo_aleatorio)  # Chamada síncrona
-        session['codigo_aleatorio'] = codigo_aleatorio
+        if email:
+            codigo_aleatorio = str(random.randint(1000, 9999))
+            send_verification_email(email, codigo_aleatorio)
+            session['codigo_aleatorio'] = codigo_aleatorio
+        else:
+            flash('Nenhum e-mail encontrado na sessão.', 'error')
+            return redirect(url_for('index'))
 
-    return render_template('verify_email.html', email=email, nome=nome, senha=senha, celular=celular, cpf=cpf)
+    return render_template('valida_cod.html')
+
 
 @app.route('/test')
 def test():
