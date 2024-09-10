@@ -1,5 +1,3 @@
-# src/app.py
-
 from flask import Flask, render_template, request, url_for, redirect, flash, session
 from flask_sqlalchemy import SQLAlchemy
 from models.usuario import db, Usuario  # Importe a instância de db e o modelo
@@ -19,8 +17,16 @@ with app.app_context():
 
 @app.route("/")
 def index():
+    return render_template('index.html')  # Renderiza o index.html com os links
+
+@app.route("/login")
+def login():
+    return render_template('login.html')
+
+@app.route("/criar_conta")
+def criar_conta():
     usuarios = Usuario.query.all()
-    return render_template('user_creat.html', usuarios=usuarios)
+    return render_template('user_creat.html', usuarios=usuarios)  # Redireciona para a página de criação de conta
 
 @app.route('/add', methods=['POST'])
 def add():
@@ -59,11 +65,6 @@ def verify_email():
             return redirect(url_for('index'))
 
     return render_template('valida_cod.html')
-
-
-@app.route('/test')
-def test():
-    return render_template('test.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
