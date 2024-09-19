@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar usuário</title>
+</head>
+
+<body>
+    <h1>Criar conta</h1>
+    <form action="/add" class="container" method="post">
+        <div>
+            <input type="text" name="nome" id="nome" placeholder="Nome" class="form-control">
+        </div>
+        <div>
+            <input type="text" name="senha" id="senha" placeholder="Senha" class="form-control">
+            {% if senha_erro != '' %}
+            <strong>{{ senha_erro }}</strong>
+            {% endif %}
+        </div>
+        <div>
+            <input type="text" name="celular" id="celular" placeholder="Celular" class="form-control">
+        </div>
+        <div>
+            <input type="text" name="email" id="email" placeholder="Email" class="form-control">
+            {% if email_erro != '' %}
+            <strong>{{ email_erro }}</strong>
+            {% endif %}
+        </div>{% with messages = get_flashed_messages(with_categories=true) %}
+
+
+        <div>
+            <input type="text" name="cpf" id="cpf" placeholder="CPF" class="form-control">
+            {% if cpf_invalido != '' %}
+            <strong>{{ cpf_invalido }}</strong>
+            {% endif %}
+            {% if cpf_existente != '' %}
+            <strong>{{ cpf_existente }}</strong>
+            {% endif %}
+        </div>
+        <div>
+            <button>Enviar</button>
+        </div>
+        {% if messages %}
+        <ul class=flashes>
+            {% for category, message in messages %}
+            <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+    </form>
+</body>
+
+</html>

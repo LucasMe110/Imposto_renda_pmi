@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tributo Tranquilo</title>
+    <link href="https://fonts.googleapis.com/css?family=Fredoka+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(0deg, rgba(34, 41, 55, 1) 0%, rgba(72, 138, 185, 1) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            display: flex;
+            width: 1000px;
+            background-color: transparent;
+        }
+
+        .left-side {
+            flex: 1;
+            text-align: center;
+            padding: 50px;
+            color: white;
+        }
+
+        .left-side h1 {
+            font-family: 'Fredoka One', cursive;
+            font-size: 32px;
+        }
+
+        .image-container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 50px;
+        }
+
+        .image {
+            width: 205px;
+            height: 353px;
+            border-radius: 50px;
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+            background-size: cover;
+            background-position: center;
+        }
+
+        #image1 {
+            background-image: url('path_to_image_1');
+        }
+
+        #image2 {
+            background-image: url('path_to_image_2');
+        }
+
+        .right-side {
+            flex: 1;
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: white;
+        }
+
+        .right-side h2 {
+            font-family: 'Fredoka One', cursive;
+            font-size: 25px;
+        }
+
+        .register-form {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .register-form input {
+            background-color: white;
+            border-radius: 50px;
+            border: none;
+            padding: 10px 20px;
+            margin-bottom: 20px;
+            font-size: 16px;
+            color: rgba(68, 73, 79, 1);
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .register-form button {
+            background-color: rgba(75, 195, 204, 1);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-family: 'Fredoka One', cursive;
+            cursor: pointer;
+        }
+
+        .register-form button:hover {
+            background-color: rgba(75, 195, 204, 0.8);
+        }
+
+        .right-side p {
+            font-size: 16px;
+            margin-top: 30px;
+        }
+
+        .right-side a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .right-side a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left-side">
+            <h1>Tributo Tranquilo</h1>
+            <div class="image-container">
+                <div class="image" id="image1"> <img src="image/img_log_direita.png" alt="image 4.png"> </div>
+                <div class="image" id="image2"><img src="image/img_log_esquerda.png" alt="image 5.png"></div>
+            </div>
+        </div>
+        <div class="right-side">
+            <h2>Cadastrar</h2>
+            <form class="register-form">
+                <input type="text" placeholder="Nome">
+                <input type="email" placeholder="Email">
+                <input type="text" placeholder="Celular">
+                <input type="text" placeholder="CPF">
+                <input type="password" placeholder="Senha">
+                <button type="submit">Cadastrar</button>
+            </form>
+            <p>Já tem uma conta? <a href="#">Clique aqui</a></p>
+        </div>
+    </div>
+</body>
+</html>
