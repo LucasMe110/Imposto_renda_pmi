@@ -2,15 +2,18 @@
 
 ## Instalação
 Execute os seguintes comandos para instalar as dependências necessárias:
+```r 
 - pip install Flask Flask-SQLAlchemy
+```
+```r
 - pip install SQLAlchemy
+```
+```r 
 - pip install numpy
+```
+```r 
 - pip install cryptography
-
-## Iniciar
-
-- Antes de iniciar o projeto, você deve ajustar a string de conexão do banco de dados no arquivo config/config.py para a sua configuração.
-
+```
 ## Estrutura de Pastas
 1. config
     - Contém as configurações do banco de dados e a secret key.

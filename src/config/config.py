@@ -1,7 +1,6 @@
 class Config:
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:12345@localhost:3306/Teste'
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://admin:SenhaForte10@contabilize-bem.ctyqcsu2eqdk.sa-east-1.rds.amazonaws.com:3306/producao'
     SECRET_KEY = 'sua_chave_secreta'
-
 
 ## Strings de Conexão
 #- Mello = 'mysql+pymysql://root:12345@localhost:3306/Teste'

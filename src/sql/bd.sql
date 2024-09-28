@@ -1,39 +1,18 @@
--- Criação da Tabela Usuario
+-- Tabela Usuario com Data_create
 CREATE TABLE Usuario (
-    id_usuario INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(100) NOT NULL,
-    senha VARCHAR(100) NOT NULL,
-    celular VARCHAR(17),
-    email VARCHAR(100) NOT NULL,
-    cpf VARCHAR(20) UNIQUE NOT NULL
-);
-
--- Criação da Tabela Categoria
-CREATE TABLE Categoria (
-    id_categoria INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(100) NOT NULL
-);
-
--- Criação da Tabela Tipo
-CREATE TABLE Tipo (
-    id_tipo INT AUTO_INCREMENT PRIMARY KEY,
-    id_categoria INT,
-    nome VARCHAR(100) NOT NULL,
-    FOREIGN KEY (id_categoria) REFERENCES Categoria(id_categoria)
-);
-
--- Criação da Tabela Documentos
-CREATE TABLE Documentos (
-    id_documento INT AUTO_INCREMENT PRIMARY KEY,
-    id_usuario INT,
-    id_categoria INT,
-    id_tipo INT,
-    valor DECIMAL(10, 2),
-    data DATE,
-    imagem VARCHAR(255),
-    codigo_NFE VARCHAR(50),
-    informacao TEXT,
-    FOREIGN KEY (id_usuario) REFERENCES Usuario(id_usuario),
-    FOREIGN KEY (id_categoria) REFERENCES Categoria(id_categoria),
-    FOREIGN KEY (id_tipo) REFERENCES Tipo(id_tipo)
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    Nome VARCHAR(255) NOT NULL,
+    CPF VARCHAR(11) UNIQUE NOT NULL,
+    Celular VARCHAR(15),
+    Email VARCHAR(255) UNIQUE,
+    Senha VARCHAR(255) NOT NULL,
+    CEP VARCHAR(8),
+    Logradouro VARCHAR(255),
+    Numero INT,
+    Complemento VARCHAR(255),
+    Cidade VARCHAR(100),
+    Bairro VARCHAR(100),
+    Estado VARCHAR(50),
+    Data_nascimento DATE,
+    Data_create TIMESTAMP DEFAULT CURRENT_TIMESTAMP -- Armazena a data de criação automaticamente
 );

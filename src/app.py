@@ -26,23 +26,28 @@ def login():
 @app.route("/criar_conta")
 def criar_conta():
     usuarios = Usuario.query.all()
-    return render_template('user_creat.html', usuarios=usuarios)  # Redireciona para a página de criação de conta
+    return render_template('criarconta.html', usuarios=usuarios)  # Redireciona para a página de criação de conta
 
 @app.route('/add', methods=['POST'])
 def add():
     if request.method == 'POST':
-        nome = request.form['nome']
-        senha = request.form['senha']
+        nome = request.form['nome-completo']
+        data_nascimento = request.form['data-nascimento']
+        cpf = request.form['cpf']
         celular = request.form['celular']
         email = request.form['email']
-        cpf = request.form['cpf']
+        confirmar_email = request.form['confirmar-email']
+        senha = request.form['senha']
+        confirmar_senha = request.form['confirmar-senha']
 
-        erros = validar_formulario(nome, senha, celular, email, cpf)
+        # Validações
+        erros = validar_formulario(nome, data_nascimento, cpf, celular, email, confirmar_email, senha, confirmar_senha)
 
         if erros:
-            return render_template('user_creat.html', **erros)
+            return render_template('criarconta.html', **erros)
 
-        salvar_dados_na_sessao(nome, senha, celular, email, cpf)
+        # Salvando os dados se tudo estiver correto
+        salvar_dados_na_sessao(nome, data_nascimento, cpf, celular, email, senha)
         return redirect(url_for('verify_email'))
 
 @app.route('/verify_email', methods=['POST', 'GET'])
