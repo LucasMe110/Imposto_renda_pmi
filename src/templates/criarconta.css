@@ -1,4 +1,8 @@
-body {
+p {
+    color: red;
+    font-size: 12px;
+}
+        body {
     margin: 0;
     padding: 0;
     font-family: 'Montserrat', sans-serif;

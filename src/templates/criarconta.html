@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css?family=Fredoka+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="criarconta.css">
+
 </head>
 
 <body>
@@ -20,7 +21,7 @@
                 <!-- Nome Completo -->
                 <div class="input-group">
                     <div class="input-box">
-                        <input type="text" id="nome-completo" name="nome-completo" placeholder="nome" required>
+                        <input type="text" id="nome-completo" name="nome-completo" placeholder="Nome" required>
                     </div>
                 </div>
 
@@ -31,6 +32,10 @@
                     </div>
                 </div>
 
+                {% if idade_menor != '' %}
+                <p>Infelizmente, menores de 18 anos não podem se cadastrar.</p>
+                {% endif %}
+
                 <!-- CPF -->
                 <div class="input-group">
                     <div class="input-box">
@@ -38,10 +43,18 @@
                     </div>
                 </div>
 
+                {% if cpf_invalido != '' %}
+                <p>{{ cpf_invalido }}</p>
+                {% endif %}
+
+                {% if cpf_existente != '' %}
+                <p>{{ cpf_existente }}</p>
+                {% endif %}
+
                 <!-- Telefone -->
                 <div class="input-group">
                     <div class="input-box">
-                        <input type="text" id="celular" name="celular" placeholder="celular" required>
+                        <input type="text" id="celular" name="celular" placeholder="Celular" required>
                     </div>
                 </div>
 
@@ -59,7 +72,14 @@
                             required>
                     </div>
                 </div>
+                
+                {% if email_erro != '' %}
+                <p>{{ confirmar_email_erro }}</p>
+                {% endif %}
 
+                {% if email_existente != '' %}
+                <p>{{ email_existente }}</p>
+                {% endif %}
                 <!-- Senha -->
                 <div class="input-group">
                     <div class="input-box">
@@ -75,7 +95,14 @@
                     </div>
                 </div>
 
-                
+                {% if senha_erro != '' %}
+                <p>{{ senha_erro }}</p>
+                {% endif %}
+
+                {% if confirmar_senha_erro != '' %}
+                <p>{{ confirmar_senha_erro }}</p>
+                {% endif %}
+
                 <!-- Botão Criar Conta -->
                 <div>
                     <button type="submit"class="button">Criar Conta</button>

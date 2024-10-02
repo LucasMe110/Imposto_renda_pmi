@@ -17,6 +17,10 @@ def validar_formulario(nome_completo, data_nascimento, cpf, celular, email, conf
     if email != confirmar_email:
         erros['confirmar_email_erro'] = "Os e-mails não coincidem."
     
+    # Verificar se o e-mail já está registrado no banco de dados
+    if Usuario.query.filter_by(email=email).first():
+        erros['email_existente'] = "Esse e-mail já está cadastrado."
+    
     # Validação do CPF usando o serviço
     if not cpf_validador(cpf):
         erros['cpf_invalido'] = "CPF inválido."
