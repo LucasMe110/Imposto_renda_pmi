@@ -14,6 +14,10 @@ Execute os seguintes comandos para instalar as dependências necessárias:
 ```r 
 - pip install cryptography
 ```
+  pip install python-dotenv
+
+  echo ".env" >> .gitignore
+
 ## Estrutura de Pastas
 1. config
     - Contém as configurações do banco de dados e a secret key.

@@ -1,5 +1,11 @@
+from dotenv import load_dotenv
+import os
+
+# Carregar as variáveis do arquivo .env
+load_dotenv()
+
 class Config:
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://admin:SenhaForte10@contabilize-bem.ctyqcsu2eqdk.sa-east-1.rds.amazonaws.com:3306/producao'
+    SQLALCHEMY_DATABASE_URI = os.getenv('SQLALCHEMY_DATABASE_URI')
     SECRET_KEY = 'sua_chave_secreta'
 
 ## Strings de Conexão
