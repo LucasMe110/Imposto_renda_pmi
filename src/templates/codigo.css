@@ -1,0 +1,102 @@
+/* General body styling */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(0deg, rgba(34, 41, 55, 1) 0%, rgba(72, 138, 185, 1) 100%);
+}
+
+/* Header styling to fix the position at the top left */
+.header {
+    position: absolute;
+    top: 20px; /* Adjust vertical position */
+    left: 40px; /* Adjust horizontal position */
+    font-family: 'Fredoka One', sans-serif; /* Apply the Fredoka One font */
+    font-weight: bold; /* Make the title bold */
+    color: #ffffff;
+    font-size: 14px;
+}
+
+/* Container for the entire layout */
+.container {
+    text-align: center;
+}
+
+/* Verification box styling */
+.verification-box {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    width: 400px;
+}
+
+.verification-box h2 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    color: #ffffff;
+}
+
+.verification-box p {
+    font-size: 1rem;
+    margin-bottom: 20px;
+    color: #cfcfcf;
+}
+
+/* Code input boxes styling */
+.code-inputs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.code-inputs input {
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    color: #ffffff;
+}
+
+.code-inputs input:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 183, 255, 0.8);
+}
+
+/* Verify button styling */
+.verify-button {
+    background-color: #00bcd4;
+    border: none;
+    border-radius: 8px;
+    padding: 15px 30px;
+    font-size: 1rem;
+    color: #ffffff;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s;
+}
+
+.verify-button:hover {
+    background-color: #0097a7;
+}
+
+/* Resend code link styling */
+.resend-code {
+    display: block;
+    margin-top: 15px;
+    color: #a0aec0;
+    text-decoration: none;
+}
+
+.resend-code:hover {
+    text-decoration: underline;
+}
