@@ -1,0 +1,179 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+.e23_16 {
+    background-image: linear-gradient(0deg, rgba(34, 41, 55, 1) 0%, rgba(72, 138, 185, 1) 100%);
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+}
+.e23_17 {
+    color: rgba(255, 255, 255, 1);
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 32px;
+    position: absolute;
+    left: 221px;
+    top: 131px;
+}
+.e23_189, .e23_190 {
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 50px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: absolute;
+}
+.e23_189 {
+    width: 205px;
+    height: 353px;
+    left: 217px;
+    top: 217px;
+    background-image: url(images/image_4.png);
+}
+.e23_190 {
+    width: 172px;
+    height: 311px;
+    left: 395px;
+    top: 238px;
+    background-image: url('dudu.png');
+}
+.e23_191 {
+    width: 426px;
+    height: 108px;
+    position: absolute;
+    left: 820px;
+    top: 262px;
+}
+.input-field {
+    background-color: rgba(255, 255, 255, 1);
+    width: 426px;
+    height: 44px;
+    border-radius: 50px;
+    padding: 0 16px;
+    margin-bottom: 20px;
+    border: none;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    color: rgba(68, 73, 79, 1);
+    position: relative;
+}
+
+/* Estilos para o botão de mostrar/esconder senha */
+.password-container {
+    position: relative;
+    width: 100%;
+}
+.password-container i {
+position: absolute;
+right: -10px;
+top: 31%; /* Centraliza o ícone verticalmente em relação ao container */
+transform: translateY(-30%); /* Move o ícone um pouco mais para baixo */
+cursor: pointer;
+font-size: 16px;
+color: rgba(68, 73, 79, 1);
+}
+
+
+.e23_198 {
+    color: rgba(255, 255, 255, 1);
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 25px;
+    position: absolute;
+    left: 832px;
+    top: 217px;
+}
+.e23_199, .e60_24 {
+    color: rgba(255, 255, 255, 1);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    position: absolute;
+}
+.e23_199 {
+    left: 844px;
+    top: 491px;
+}
+.e60_24 {
+    left: 1001px;
+    top: 491px;
+}
+.e23_200 {
+    background-color: rgba(75, 195, 204, 1);
+    width: 460px; /* Mesma largura dos campos de input */
+    height: 44px; /* Mesma altura dos campos de input */
+    position: absolute;
+    left: 820px;
+    top: 407px;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 16px;
+    color: rgba(255, 255, 255, 1);
+    transition: background-color 0.3s, box-shadow 0.3s; /* Transição suave */
+}
+
+/* Efeito ao passar o mouse sobre o botão */
+.e23_200:hover {
+    background-color: rgba(50, 150, 160, 1); /* Mudar a cor de fundo */
+    box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.3); /* Adicionar sombra */
+}
+
+/* Media queries para responsividade */
+@media (max-width: 768px) {
+    .e23_17 {
+        font-size: 24px; /* Ajustando tamanho da fonte */
+        left: 20px; /* Ajustando posição para telas menores */
+        top: 20px; /* Ajustando posição para telas menores */
+    }
+    .e23_189 {
+        width: 150px; /* Ajustando tamanhos das imagens */
+        height: auto; /* Mantendo a proporção */
+        left: 10px; /* Ajustando posição */
+        top: 100px; /* Ajustando posição */
+    }
+    .e23_190 {
+        width: 120px; /* Ajustando tamanhos das imagens */
+        height: auto; /* Mantendo a proporção */
+        left: 180px; /* Ajustando posição */
+        top: 120px; /* Ajustando posição */
+    }
+    .e23_191 {
+        left: 50%; /* Centralizando horizontalmente */
+        top: 300px; /* Ajustando posição */
+        transform: translateX(-50%); /* Ajustando para ficar no centro */
+    }
+    .input-field {
+        width: 90%; /* Fazendo o campo ocupar a largura disponível */
+        max-width: 426px; /* Largura máxima */
+    }
+    .e23_200 {
+        left: 50%; /* Centralizando horizontalmente */
+        top: 407px; /* Ajustando posição */
+        transform: translateX(-50%); /* Ajustando para ficar no centro */
+    }
+    .e23_198 {
+        left: 50%; /* Centralizando horizontalmente */
+        top: 217px; /* Ajustando posição */
+        transform: translateX(-50%); /* Ajustando para ficar no centro */
+    }
+    .e23_199, .e60_24 {
+        left: 50%; /* Centralizando horizontalmente */
+        transform: translateX(-50%); /* Ajustando para ficar no centro */
+    }
+    .image-container {
+display: flex;
+justify-content: center; /* Centraliza as imagens horizontalmente */
+align-items: center; /* Centraliza as imagens verticalmente se necessário */
+gap: 200px; /* Espaçamento entre as imagens, ajuste conforme necessário */
+/* Adicione margens ou padding se precisar de espaçamento adicional ao redor do contêiner */
+}
+
+.imagem-centralizada {
+max-width: 100%; /* Garante que as imagens não ultrapassem o tamanho do contêiner */
+height: auto; /* Mantém a proporção das imagens */
+/* Adicione margens ou padding se precisar de espaçamento adicional em torno das imagens */
+}
+
+    
+
+}
