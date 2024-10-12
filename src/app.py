@@ -39,21 +39,26 @@ def add():
         confirmar_email = request.form['confirmar-email']
         senha = request.form['senha']
         confirmar_senha = request.form['confirmar-senha']
+        cep = request.form['cep']  # Captura o CEP
 
         # Validações
-        erros = validar_formulario(nome, data_nascimento, cpf, celular, email, confirmar_email, senha, confirmar_senha)
+        erros = validar_formulario(nome, data_nascimento, cpf, celular, email, confirmar_email, senha, confirmar_senha, cep)
 
         if erros:
-            return render_template('criarconta.html', **erros)
+            return render_template('criarconta.html', erros=erros)
 
         # Salvando os dados se tudo estiver correto
-        salvar_dados_na_sessao(nome, data_nascimento, cpf, celular, email, senha)
+        salvar_dados_na_sessao(nome, data_nascimento, cpf, celular, email, senha, cep)
         return redirect(url_for('verify_email'))
 
 @app.route('/verify_email', methods=['POST', 'GET'])
 def verify_email():
     if request.method == 'POST':
-        codigo_inserido = request.form['codigo']
+        # Combine os valores dos quatro campos do formulário para formar o código completo
+        codigo_inserido = (request.form.get('code-1') +
+                           request.form.get('code-2') +
+                           request.form.get('code-3') +
+                           request.form.get('code-4'))
         if codigo_inserido == session.get('codigo_aleatorio'):
             if salvar_usuario_no_bd():
                 return redirect(url_for('index'))
@@ -62,6 +67,7 @@ def verify_email():
     else:
         email = session.get('email')
         if email:
+            # Gera um código aleatório de 4 dígitos e envia por e-mail
             codigo_aleatorio = str(random.randint(1000, 9999))
             send_verification_email(email, codigo_aleatorio)
             session['codigo_aleatorio'] = codigo_aleatorio
@@ -69,7 +75,8 @@ def verify_email():
             flash('Nenhum e-mail encontrado na sessão.', 'error')
             return redirect(url_for('index'))
 
-    return render_template('valida_cod.html')
+    # Retorna o template 'valida_cod.html' e passa a variável 'email'
+    return render_template('valida_cod.html', email=email)
 
 if __name__ == '__main__':
     app.run(debug=True)

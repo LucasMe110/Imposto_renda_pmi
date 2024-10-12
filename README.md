@@ -14,9 +14,10 @@ Execute os seguintes comandos para instalar as dependências necessárias:
 ```r 
 - pip install cryptography
 ```
-  pip install python-dotenv
 
-  echo ".env" >> .gitignore
+```r 
+- pip install python-dotenv
+```
 
 ## Estrutura de Pastas
 1. config

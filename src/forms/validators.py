@@ -6,7 +6,7 @@ from services.password_validator import validar_senha
 from sqlalchemy.exc import IntegrityError
 from services.idade import calcular_idade
 
-def validar_formulario(nome_completo, data_nascimento, cpf, celular, email, confirmar_email, senha, confirmar_senha):
+def validar_formulario(nome_completo, data_nascimento, cpf, celular, email, confirmar_email, senha, confirmar_senha, cep):
     erros = {}
 
     # Validação de e-mail
@@ -29,6 +29,15 @@ def validar_formulario(nome_completo, data_nascimento, cpf, celular, email, conf
     if Usuario.query.filter_by(cpf=cpf).first():
         erros['cpf_existente'] = "Esse CPF já está cadastrado."
     
+    # Validação do CEP
+    if not re.match(r'^\d{5}-?\d{3}$', cep):  # Verifica formato 12345-678 ou 12345678
+        erros['cep_erro'] = "CEP inválido. O formato deve ser 12345-678 ou 12345678."
+
+    # Verificar se o CEP já está registrado no banco de dados
+    # Supondo que você tenha um campo de CEP no modelo Usuario
+    if Usuario.query.filter_by(cep=cep).first():
+        erros['cep_existente'] = "Esse CEP já está cadastrado."
+    
     # Validação da senha
     if not validar_senha(senha):
         erros['senha_erro'] = "Senha não atende os critérios de segurança."
@@ -37,12 +46,13 @@ def validar_formulario(nome_completo, data_nascimento, cpf, celular, email, conf
     if senha != confirmar_senha:
         erros['confirmar_senha_erro'] = "As senhas não coincidem."
 
+    # Verificar a idade
     if not calcular_idade(data_nascimento):
         erros['idade_menor'] = "Menor de idade."
 
     return erros  # Retorna dicionário de erros
 
-def salvar_dados_na_sessao(nome_completo, data_nascimento, cpf, celular, email, senha):
+def salvar_dados_na_sessao(nome_completo, data_nascimento, cpf, celular, email, senha, cep):
     """Salva os dados temporariamente na sessão do Flask"""
     session['nome_completo'] = nome_completo
     session['data_nascimento'] = data_nascimento
@@ -50,6 +60,7 @@ def salvar_dados_na_sessao(nome_completo, data_nascimento, cpf, celular, email, 
     session['celular'] = celular
     session['email'] = email
     session['senha'] = senha
+    session['cep'] = cep  # Adiciona CEP à sessão
 
 def salvar_usuario_no_bd():
     """Salva o usuário no banco de dados após validação e captura dos dados da sessão"""
@@ -59,8 +70,9 @@ def salvar_usuario_no_bd():
     celular = session.get('celular')
     email = session.get('email')
     senha = session.get('senha')
+    cep = session.get('cep')  # Obtém o CEP da sessão
 
-    if not all([nome_completo, data_nascimento, cpf, celular, email, senha]):
+    if not all([nome_completo, data_nascimento, cpf, celular, email, senha, cep]):
         flash("Erro ao salvar usuário: Dados incompletos.", 'error')
         return False
 
@@ -70,7 +82,8 @@ def salvar_usuario_no_bd():
         cpf=cpf,
         celular=celular,
         email=email,
-        senha=senha
+        senha=senha,
+        cep=cep  # Adiciona CEP ao modelo do usuário
     )
 
     db.session.add(usuario)
