@@ -6,7 +6,7 @@ load_dotenv()
 
 class Config:
     SQLALCHEMY_DATABASE_URI = os.getenv('SQLALCHEMY_DATABASE_URI')
-    SECRET_KEY = 'sua_chave_secreta'
+    SECRET_KEY = 'Truco'
 
 ## Strings de Conexão
 #- Mello = 'mysql+pymysql://root:12345@localhost:3306/Teste'

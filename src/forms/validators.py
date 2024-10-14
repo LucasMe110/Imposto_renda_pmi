@@ -31,7 +31,7 @@ def validar_formulario(nome_completo, data_nascimento, cpf, celular, email, conf
     
     # Validação do CEP
     if not re.match(r'^\d{5}-?\d{3}$', cep):  # Verifica formato 12345-678 ou 12345678
-        erros['cep_erro'] = "CEP inválido. O formato deve ser 12345-678 ou 12345678."
+        erros['cep_erro'] = "CEP inválido."
 
     # Verificar se o CEP já está registrado no banco de dados
     # Supondo que você tenha um campo de CEP no modelo Usuario
@@ -74,7 +74,7 @@ def salvar_usuario_no_bd():
 
     if not all([nome_completo, data_nascimento, cpf, celular, email, senha, cep]):
         flash("Erro ao salvar usuário: Dados incompletos.", 'error')
-        return False
+        return None
 
     usuario = Usuario(
         nome=nome_completo,
@@ -90,8 +90,9 @@ def salvar_usuario_no_bd():
     try:
         db.session.commit()  # Comita as mudanças no banco de dados
         flash("Usuário cadastrado com sucesso!", 'success')
-        return True
+        
+        return usuario  # Retorna a instância do usuário
     except IntegrityError:
         db.session.rollback()  # Reverte em caso de erro de integridade
         flash("Erro ao cadastrar usuário. Tente novamente.", 'error')
-        return False
+        return None

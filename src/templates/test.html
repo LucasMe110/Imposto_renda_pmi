@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Inicial</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='index.css')}}">
+</head>
+<body>
+    <h1>Bem-vindo</h1>
+    <h2>Login com sucesso </h2>
+    <p>{{current_user.nome}}</p>
+    <p>{{current_user.cpf}}</p>
+
+    <a href="{{ url_for('logout') }}">sair</a> 
+</body>
+</html>

@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verificação de E-mail</title>
-    <link href="https://fonts.googleapis.com/css?family=Fredoka+One&display=swap" rel="stylesheet"> <!-- Link para Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Fredoka+One&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{url_for('static', filename='valida_cod.css')}}">
 </head>
 <body>
@@ -16,7 +16,17 @@
         <div class="verification-box">
             <h2>Verifique Seu Código</h2>
             <p>Insira o código de acesso que você acabou de receber no seu endereço {{ email }}</p>
-            
+
+            <!-- Exibir mensagens de flash -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <ul class="flashed-messages">
+                        {% for category, message in messages %}
+                            <li class="{{ category }}">{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
 
             <!-- Formulário para verificação do código -->
             <form action="{{ url_for('verify_email') }}" method="POST">
@@ -30,17 +40,6 @@
             </form>
 
             <a href="#" class="resend-code">Não recebeu um código?</a>
-            
-            <!-- Flash messages para feedback ao usuário -->
-            {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                    <ul>
-                    {% for category, message in messages %}
-                        <li class="{{ category }}">{{ message }}</li>
-                    {% endfor %}
-                    </ul>
-                {% endif %}
-            {% endwith %}
         </div>
     </div>
     <script src="{{ url_for('static', filename='valida_cod.js') }}"></script>

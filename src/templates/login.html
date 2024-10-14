@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,55 +8,57 @@
     <link href="https://fonts.googleapis.com/css?family=Fredoka+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="{{url_for('static', filename='login.css')}}">
-    
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
 </head>
+
 <body>
-    <div class="e23_16">
-        <span class="e23_17">Contabilize Bem</span>
-        <div class="e23_189"><img src="{{url_for('static', filename='img_log_esquerda.png')}}" alt="Descrição da Imagem" class="imagem-centralizada" /></div>
-        <div class="e23_190"><img src="{{url_for('static', filename='img_log_direita.png')}}" alt="Descrição da Imagem" class="imagem-centralizada" /></div>
-        <div class="e23_191">
-            <input type="email" class="input-field" placeholder="E-mail">
-            
-            <!-- Campo de senha com ícone interativo -->
-            <div class="password-container">
-                <input type="password" id="password" class="input-field" placeholder="Senha">
-                <i class="far fa-eye" id="togglePassword"></i>
-                
+    <form action="" method="post">
+        <div class="e23_16">
+            <span class="e23_17">Contabilize Bem</span>
+            <div class="e23_189">
+                <img src="{{ url_for('static', filename='img_log_esquerda.png') }}" alt="Descrição da Imagem" class="imagem-centralizada" />
             </div>
-        </div>
-        <span class="e23_198">Entrar</span>
-        <a href="#" class="e23_199">Esqueceu a senha?</a>
-        <a href="{{ url_for('criar_conta') }}" class="e60_24">Não tem uma conta?</a>
-        <button class="e23_200">Entrar</button>
+            <div class="e23_190">
+                <img src="{{ url_for('static', filename='img_log_direita.png') }}" alt="Descrição da Imagem" class="imagem-centralizada" />
+            </div>
+            <div class="e23_191">
+                <input type="email" class="input-field" name="emailForm" placeholder="E-mail">
+                
+                <!-- Campo de senha com ícone interativo -->
+                <div class="password-container">
+                    <input type="password" id="password" name="senhaForm" class="input-field" placeholder="Senha">
+                    <i class="far fa-eye" id="togglePassword"></i>
+                </div>
+            </div>
+            <span class="e23_198">Entrar</span>
+    </form>
+    {% if error_message %}
+        <p style="color:red;">{{ error_message }}</p>
+    {% endif %}
+    <a href="#" class="e23_199">Esqueceu a senha?</a>
+    <a href="{{ url_for('criar_conta') }}" class="e60_24">Não tem uma conta?</a>
+    <button type="submit" class="e23_200">Entrar</button> <!-- Certifique-se de que o botão está dentro do formulário -->
     </div>
 
     <div class="image-container">
         <div class="e23_189"></div>
         <div class="e23_190"></div>
     </div>
-    
-    
-
-
-    
-    
 
     <script>
-       const password = document.getElementById('password');
-const togglePassword = document.getElementById('togglePassword');
+        const password = document.getElementById('password');
+        const togglePassword = document.getElementById('togglePassword');
 
-togglePassword.addEventListener('click', function () {
-    // Alterna o tipo de input entre 'password' e 'text'
-    const isPasswordVisible = password.getAttribute('type') === 'password';
-    password.setAttribute('type', isPasswordVisible ? 'text' : 'password');
+        togglePassword.addEventListener('click', function () {
+            // Alterna o tipo de input entre 'password' e 'text'
+            const isPasswordVisible = password.getAttribute('type') === 'password';
+            password.setAttribute('type', isPasswordVisible ? 'text' : 'password');
 
-    // Define o ícone correto com base na visibilidade da senha
-    this.classList.toggle('fa-eye', isPasswordVisible);  // Mostra o olho aberto se a senha for visível
-    this.classList.toggle('fa-eye-slash', !isPasswordVisible); // Mostra o olho fechado se a senha não for visível
-});
-
+            // Define o ícone correto com base na visibilidade da senha
+            this.classList.toggle('fa-eye', isPasswordVisible);  // Mostra o olho aberto se a senha for visível
+            this.classList.toggle('fa-eye-slash', !isPasswordVisible); // Mostra o olho fechado se a senha não for visível
+        });
     </script>
 </body>
+
 </html>

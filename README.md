@@ -19,6 +19,10 @@ Execute os seguintes comandos para instalar as dependências necessárias:
 - pip install python-dotenv
 ```
 
+```r 
+-pip install flask-login
+```
+ 
 ## Estrutura de Pastas
 1. config
     - Contém as configurações do banco de dados e a secret key.

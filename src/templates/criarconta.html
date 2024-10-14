@@ -7,9 +7,7 @@
     <title>Contabilize Bem - Criar Conta</title>
     <link href="https://fonts.googleapis.com/css?family=Fredoka+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{url_for('static', filename='criarconta.css')}}">
-
-
+    <link rel="stylesheet" href="{{ url_for('static', filename='criarconta.css') }}">
 </head>
 
 <body>
@@ -44,12 +42,12 @@
                     </div>
                 </div>
 
-                {% if cpf_invalido != '' %}
-                <p>{{ cpf_invalido }}</p>
+                {% if 'cpf_invalido' in erros %}
+                <p>{{ erros['cpf_invalido'] }}</p>
                 {% endif %}
 
-                {% if cpf_existente != '' %}
-                <p>{{ cpf_existente }}</p>
+                {% if 'cpf_existente' in erros %}
+                <p>{{ erros['cpf_existente'] }}</p>
                 {% endif %}
 
                 <!-- CEP -->
@@ -58,6 +56,10 @@
                         <input type="text" id="cep" name="cep" placeholder="CEP" required>
                     </div>
                 </div>
+
+                {% if 'cep_erro' in erros %}
+                <p>{{ erros['cep_erro'] }}</p>
+                {% endif %}
 
                 <!-- Telefone -->
                 <div class="input-group">
@@ -81,13 +83,14 @@
                     </div>
                 </div>
 
-                {% if email_erro != '' %}
-                <p>{{ confirmar_email_erro }}</p>
+                {% if 'confirmar_email_erro' in erros %}
+                <p>{{ erros['confirmar_email_erro'] }}</p>
                 {% endif %}
 
-                {% if email_existente != '' %}
-                <p>{{ email_existente }}</p>
+                {% if 'email_existente' in erros %}
+                <p>{{ erros['email_existente'] }}</p>
                 {% endif %}
+
                 <!-- Senha -->
                 <div class="input-group">
                     <div class="input-box">
@@ -103,19 +106,18 @@
                     </div>
                 </div>
 
-                {% if senha_erro != '' %}
-                <p>{{ senha_erro }}</p>
+                {% if 'senha_erro' in erros %}
+                <p>{{ erros['senha_erro'] }}</p>
                 {% endif %}
 
-                {% if confirmar_senha_erro != '' %}
-                <p>{{ confirmar_senha_erro }}</p>
+                {% if 'confirmar_senha_erro' in erros %}
+                <p>{{ erros['confirmar_senha_erro'] }}</p>
                 {% endif %}
 
                 <!-- Botão Criar Conta -->
                 <div>
                     <button type="submit" class="button">Criar Conta</button>
                 </div>
-
 
                 <!-- Termos e Condições -->
                 <div class="terms">
