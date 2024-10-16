@@ -121,4 +121,5 @@ def verify_email():
     return render_template('valida_cod.html', email=email)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0', port=80)
+
