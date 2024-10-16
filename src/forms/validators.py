@@ -1,10 +1,10 @@
 import re
 from flask import session, flash, request
-from models.usuario import Usuario, db  # Importação do modelo e db
-from services.cpf_validator import cpf_validador
-from services.password_validator import validar_senha
+from src.models.usuario import Usuario, db  # Importação do modelo e db
+from src.services.cpf_validator import cpf_validador
+from src.services.password_validator import validar_senha
 from sqlalchemy.exc import IntegrityError
-from services.idade import calcular_idade
+from src.services.idade import calcular_idade
 
 def validar_formulario(nome_completo, data_nascimento, cpf, celular, email, confirmar_email, senha, confirmar_senha, cep):
     erros = {}

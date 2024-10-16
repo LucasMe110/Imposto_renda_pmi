@@ -1,17 +1,16 @@
 from flask import Flask, render_template, request, url_for, redirect, flash, session
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
-from models.usuario import db, Usuario  # Importe a instância de db e o modelo
-from forms.validators import validar_formulario, salvar_dados_na_sessao, salvar_usuario_no_bd
-from services.send_verification_email import send_verification_email  # Importa corretamente a função
-from config.config import Config
+from src.models.usuario import Usuario, db  # Corrigido para incluir o prefixo 'src'
+from src.forms.validators import validar_formulario, salvar_dados_na_sessao, salvar_usuario_no_bd  # Corrigido para incluir o prefixo 'src'
+from src.services.send_verification_email import send_verification_email  # Corrigido para incluir o prefixo 'src'
+from src.config.config import Config
 import random
 
-app = Flask(__name__, template_folder='templates')
+app = Flask(__name__, static_folder='src/static', template_folder='src/templates')
 lm = LoginManager(app)
 lm.login_view = 'login'
 app.config.from_object(Config)
-
 
 db.init_app(app)
 
@@ -19,14 +18,9 @@ db.init_app(app)
 def user_loader(id):
     usuario = db.session.query(Usuario).filter_by(id=id).first()
     return usuario
-    
-
-
-
 
 with app.app_context():
     db.create_all()
-
 
 @app.route('/logout')
 @login_required  
@@ -54,12 +48,11 @@ def login():
 
         user = db.session.query(Usuario).filter_by(email=email, senha=senha).first()
         if not user:
-            error_message = "Email ou senha incorretos "
+            error_message = "Email ou senha incorretos"
             return render_template('login.html', error_message=error_message)
 
         login_user(user)
         return redirect(url_for('test'))  # Assegure-se de que 'test' é um endpoint válido
-
 
 @app.route("/criar_conta")
 def criar_conta():
@@ -126,7 +119,6 @@ def verify_email():
 
     # Retorna o template 'valida_cod.html' e passa a variável 'email'
     return render_template('valida_cod.html', email=email)
-
 
 if __name__ == '__main__':
     app.run(debug=True)

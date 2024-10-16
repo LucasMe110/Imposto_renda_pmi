@@ -1,4 +1,4 @@
-from services.email_service import criar_mensagem_email
+from src.services.email_service import criar_mensagem_email
 import smtplib
 
 def send_verification_email(email, codigo_aleatorio):
