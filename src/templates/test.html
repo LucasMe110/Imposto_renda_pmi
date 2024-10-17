@@ -9,7 +9,9 @@
 <body>
     <h1>Bem-vindo</h1>
     <h2>Login com sucesso </h2>
+    <p>Nome:</p>
     <p>{{current_user.nome}}</p>
+    <p>Cpf:</p>
     <p>{{current_user.cpf}}</p>
 
     <a href="{{ url_for('logout') }}">sair</a> 
