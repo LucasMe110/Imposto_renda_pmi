@@ -2,6 +2,7 @@
 
 ## Link para visualização do site: [contabilizebem](https://contabilizebem.squareweb.app)
 
+
 ## Instalação
 Execute os seguintes comandos para instalar as dependências necessárias:
 

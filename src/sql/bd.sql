@@ -7,12 +7,7 @@ CREATE TABLE Usuario (
     Email VARCHAR(255) UNIQUE,
     Senha VARCHAR(255) NOT NULL,
     CEP VARCHAR(8),
-    Logradouro VARCHAR(255),
-    Numero INT,
-    Complemento VARCHAR(255),
-    Cidade VARCHAR(100),
-    Bairro VARCHAR(100),
-    Estado VARCHAR(50),
     Data_nascimento DATE,
-    Data_create TIMESTAMP DEFAULT CURRENT_TIMESTAMP -- Armazena a data de criação automaticamente
+    Data_create TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
