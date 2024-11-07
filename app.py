@@ -14,6 +14,12 @@ app.config.from_object(Config)
 
 db.init_app(app)
 
+
+@app.route("/front")
+def front():
+    return render_template('')
+
+
 @lm.user_loader
 def user_loader(id):
     usuario = db.session.query(Usuario).filter_by(id=id).first()
