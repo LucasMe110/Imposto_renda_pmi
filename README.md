@@ -66,7 +66,7 @@ Execute os seguintes comandos para instalar as dependências necessárias:
 
 ## Ponto de função:
 
-![Não encontrado](docs/ponto-de-funcao.png)
+![Não encontrado](docs/ponto-de-funcao.jpeg)
 
 ## Integrantes:
 
