@@ -12,6 +12,6 @@ class Usuario(UserMixin, db.Model):
     celular = db.Column(db.String(15))
     email = db.Column(db.String(255), unique=True)
     senha = db.Column(db.String(255), nullable=False)
-    cep = db.Column(db.String(8))
+    cep = db.Column(db.String(10))
     data_nascimento = db.Column(db.Date)
     data_create = db.Column(db.TIMESTAMP, default=db.func.current_timestamp(), nullable=False)

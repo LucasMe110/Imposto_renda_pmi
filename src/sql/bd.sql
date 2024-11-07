@@ -1,4 +1,3 @@
--- Tabela Usuario com Data_create
 CREATE TABLE Usuario (
     ID INT AUTO_INCREMENT PRIMARY KEY,
     Nome VARCHAR(255) NOT NULL,
@@ -6,8 +5,11 @@ CREATE TABLE Usuario (
     Celular VARCHAR(15),
     Email VARCHAR(255) UNIQUE,
     Senha VARCHAR(255) NOT NULL,
-    CEP VARCHAR(8),
+    CEP VARCHAR(10),
     Data_nascimento DATE,
     Data_create TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+
+ALTER TABLE Usuario MODIFY COLUMN CEP VARCHAR(10);
 
