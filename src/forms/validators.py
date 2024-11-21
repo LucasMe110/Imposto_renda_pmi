@@ -32,11 +32,6 @@ def validar_formulario(nome_completo, data_nascimento, cpf, celular, email, conf
     # Validação do CEP
     if not re.match(r'^\d{5}-?\d{3}$', cep):  # Verifica formato 12345-678 ou 12345678
         erros['cep_erro'] = "CEP inválido."
-
-    # Verificar se o CEP já está registrado no banco de dados
-    # Supondo que você tenha um campo de CEP no modelo Usuario
-    if Usuario.query.filter_by(cep=cep).first():
-        erros['cep_existente'] = "Esse CEP já está cadastrado."
     
     # Validação da senha
     if not validar_senha(senha):
