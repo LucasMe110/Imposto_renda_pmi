@@ -1,0 +1,189 @@
+/* Reset CSS */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(0deg, rgba(34, 41, 55, 1) 0%, rgba(72, 138, 185, 1) 100%);
+  color: #FFF;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  text-align: center;
+}
+
+/* Top Header */
+.top-header {
+  width: 100%;
+  padding: 20px 0;
+  background: transparent;
+  position: fixed;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: 700;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+nav {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-link, .cta-button-header {
+  color: #FFF;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.cta-button-header {
+  padding: 8px 20px;
+  background-color: #47B7F3;
+  border-radius: 20px;
+  transition: background 0.3s;
+}
+
+.cta-button-header:hover {
+  background-color: #36A2E3;
+}
+
+/* Content Sections */
+.content {
+  margin-top: 80px;
+  width: 100%;
+  max-width: 1200px;
+  padding: 20px;
+}
+
+.hero {
+  padding: 80px 20px;
+  
+}
+
+.hero h1 {
+  font-size: 40px;
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+
+.hero p {
+  font-size: 18px;
+  margin-bottom: 30px;
+  color: #FFF;
+}
+
+.cta-button {
+  display: inline-block;
+  padding: 12px 30px;
+  background-color: #47B7F3;
+  color: #FFF;
+  border-radius: 50px;
+  text-decoration: none;
+  font-size: 16px;
+  transition: background 0.3s;
+}
+
+.cta-button:hover {
+  background-color: #36A2E3;
+}
+
+/* Benefits Section */
+.benefits {
+  padding: 60px 20px;
+}
+
+.benefits h2 {
+  font-size: 32px;
+  margin-bottom: 40px;
+  color: #FFF;
+}
+
+.benefits-list {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.benefit {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 30px;
+  width: 260px;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.benefit:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.benefit h3 {
+  font-size: 20px;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+
+/* CTA Section */
+.cta {
+  padding: 60px 20px;
+  background: transparent;
+}
+
+.cta h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+.cta-button-large {
+  display: inline-block;
+  padding: 15px 40px;
+  background-color: #47B7F3;
+  color: #FFF;
+  border-radius: 50px;
+  text-decoration: none;
+  font-size: 18px;
+  transition: background 0.3s;
+}
+
+.cta-button-large:hover {
+  background-color: #36A2E3;
+}
+
+/* Footer */
+footer {
+  padding: 20px;
+  color: #B0C4DE;
+  font-size: 14px;
+  background: transparent;
+  text-align: center;
+  width: 100%;
+}
+
+.nav-links {
+  display: flex;
+  gap: 15px;
+}
+
+.top-header .container {
+  display: flex;
+  justify-content: space-between; /* Alinha logo à esquerda e botões à direita */
+  align-items: center; /* Centraliza verticalmente */
+  width: 100%; /* Ocupa toda a largura */
+  max-width: 1200px; /* Limite de largura para centralizar */
+  margin: 0 auto; /* Centraliza o conteúdo horizontalmente */
+}
