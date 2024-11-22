@@ -17,7 +17,7 @@ db.init_app(app)
 
 @app.route("/front")
 def front():
-    return render_template('')
+    return render_template('main.html')
 
 
 @lm.user_loader
@@ -34,11 +34,11 @@ def logout():
     logout_user()
     return redirect(url_for('login'))
 
-@app.route("/test")
+@app.route("/home")
 @login_required
-def test():
+def home():
     print(current_user)
-    return render_template('test.html')
+    return render_template('home.html')
 
 @app.route("/")
 def index():
