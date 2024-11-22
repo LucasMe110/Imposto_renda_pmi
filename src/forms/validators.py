@@ -29,9 +29,6 @@ def validar_formulario(nome_completo, data_nascimento, cpf, celular, email, conf
     if Usuario.query.filter_by(cpf=cpf).first():
         erros['cpf_existente'] = "Esse CPF já está cadastrado."
     
-    # Validação do CEP
-    if not re.match(r'^\d{5}-?\d{3}$', cep):  # Verifica formato 12345-678 ou 12345678
-        erros['cep_erro'] = "CEP inválido."
     
     # Validação da senha
     if not validar_senha(senha):
@@ -84,7 +81,7 @@ def salvar_usuario_no_bd():
     db.session.add(usuario)
     try:
         db.session.commit()  # Comita as mudanças no banco de dados
-        flash("Usuário cadastrado com sucesso!", 'success')
+        flash('success')
         
         return usuario  # Retorna a instância do usuário
     except IntegrityError:
