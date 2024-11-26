@@ -1,0 +1,432 @@
+/* General */
+body {
+  font-family: 'Rubik', sans-serif;
+  background: linear-gradient(to bottom, #1c2d3f, #488ab9); /* Gradiente contínuo */
+  margin: 0;
+  padding: 0;
+  min-height: 100vh; /* Garante que o fundo cobre toda a altura da tela */
+  display: flex;
+  flex-direction: column;
+}
+
+
+
+.container {
+  flex: 1; /* Garante que o conteúdo ocupa o espaço necessário */
+  padding: 0 80px; /* Adiciona 20px de margem em ambos os lados */
+}
+
+/* Header */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+}
+
+header h1 {
+  font-family: 'Fredoka One', sans-serif;
+  font-size: 24px;
+  color: white;
+}
+
+.user-area {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-icon {
+  width: 40px;
+  height: 40px;
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+}
+
+.user-name {
+  font-family: 'Rubik', sans-serif;
+  font-size: 18px;
+  color: white;
+}
+footer {
+  text-align: center;
+  padding: 20px;
+  font-size: 16px;
+  font-family: 'Rubik', sans-serif;
+  margin-top: 20px;
+
+}
+.share-button {
+  padding: 8px 20px;
+  background: linear-gradient(0deg, #2C79ED 0%, #4BC3CC 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* Filters and Buttons */
+.filter-container {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.filter-button,
+.add-button,
+.back-button {
+  padding: 10px 20px;
+  background: linear-gradient(45deg, #2C79ED, #4BC3CC);
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.3s ease, opacity 0.3s;
+  margin-bottom: 20px;
+}
+
+.filter-button:hover,
+.add-button:hover,
+.back-button:hover {
+  transform: scale(1.1);
+  opacity: 0.9;
+}
+
+/* Gallery */
+/* Ajuste da galeria */
+.drive-content {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 5 itens por linha */
+  gap: 15px;
+}
+
+/* Imagens na galeria */
+.image-item {
+  position: relative;
+}
+
+.image-item img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.3s ease, opacity 0.3s;
+}
+
+.image-item img:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+/* Botão excluir dentro da imagem */
+.image-item .delete-button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: rgba(244, 67, 54, 0.8); /* Fundo transparente */
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.image-item .delete-button:hover {
+  opacity: 1;
+}
+
+/* Modal de visualização */
+/* Modal para visualização da imagem */
+.modal-content img {
+  max-width: 90vw; /* Máximo de 90% da largura da janela */
+  max-height: 80vh; /* Máximo de 80% da altura da janela */
+  display: block; /* Centraliza a imagem no modal */
+  margin: 0 auto; /* Espaçamento automático para centralizar */
+  border-radius: 8px; /* Bordas arredondadas */
+}
+
+.modal-content {
+  background-color: #0d161f;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  max-width: 90%;
+  max-height: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden; /* Garante que o conteúdo não vaze */
+}
+
+.modal-content img {
+  max-width: 100%;
+  max-height: 100vh; /* Altura máxima de 70% da altura da tela */
+  border-radius: 8px; /* Bordas arredondadas */
+  object-fit: contain; /* Garante que a imagem se ajuste dentro do espaço */
+}
+
+.close-modal {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  color: white;
+  cursor: pointer;
+  z-index: 1000; /* Garante que o botão fique sobreposto */
+}
+
+.close-modal:hover {
+  background-color: rgba(255, 255, 255, 0.3); /* Destaca ao passar o mouse */
+}
+
+
+/* Efeito ao passar o mouse */
+.explore-item:hover {
+  background-color: rgba(72, 138, 185, 0.5); /* Fundo levemente mais escuro */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8); /* Fundo escuro e semi-transparente */
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: #0d161f; /* Fundo do modal */
+  color: #fff; /* Texto branco para contraste */
+  padding: 30px;
+  border-radius: 10px;
+  width: 400px;
+  text-align: center;
+  position: relative;
+  font-family: 'Rubik', sans-serif;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); /* Sombra para profundidade */
+}
+
+.close-modal {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  color: #d9e6f2;
+  cursor: pointer;
+}
+
+.dropdown-container {
+  margin: 20px 0;
+  text-align: left;
+}
+
+.dropdown-label {
+  font-size: 16px;
+  color: #d9e6f2; /* Cor do texto do label */
+  margin-bottom: 8px;
+  display: block;
+}
+
+.dropdown {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 2px solid #4bc3cc; /* Cor da borda */
+  background-color: #0d161f;
+  color: #d9e6f2; /* Texto branco */
+  font-family: 'Rubik', sans-serif;
+  font-size: 16px;
+  cursor: pointer;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.dropdown:hover, .dropdown:focus {
+  border-color: #0f4e72; /* Mudança de cor ao passar o mouse */
+  background-color: rgba(15, 78, 114, 0.8); /* Fundo levemente mais escuro */
+  outline: none;
+}
+
+.file-drop-area {
+  border: 2px dashed #4bc3cc; /* Borda pontilhada */
+  border-radius: 8px;
+  padding: 20px;
+  color: #d9e6f2;
+  font-size: 16px;
+  font-family: 'Rubik', sans-serif;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.file-drop-area:hover {
+  background-color: rgba(75, 195, 204, 0.2); /* Fundo mais escuro */
+  border-color: #0f4e72; /* Cor da borda ao passar o mouse */
+}
+
+.file-name {
+  display: block;
+  font-size: 14px;
+  color: #c5d9e4;
+  font-family: 'Rubik', sans-serif;
+  margin-top: 10px;
+  text-align: left; /* Alinhamento do texto */
+}
+
+.modal-buttons {
+  margin-top: 20px;
+}
+
+.modal-open {
+  padding: 10px 20px;
+  background-color: #0f4e72;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-family: 'Rubik', sans-serif;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.modal-open:hover {
+  background-color: #01315b;
+}
+
+
+.delete-button {
+  background-color: #f44336;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.delete-button:hover {
+  background-color: #d32f2f;
+}
+
+.no-files-message {
+  color: white;
+}
+p {
+  color: white;
+  align-items: right;
+}
+h2 {
+  color: white;
+}
+.add-button {
+  text-align: right;
+  margin-left: 1250px;
+}
+
+
+
+.close-modal {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  color: #d9e6f2;
+  cursor: pointer;
+}
+
+.dropdown-container {
+  margin: 20px 0;
+  text-align: left;
+}
+
+.dropdown-label {
+  font-size: 16px;
+  color: #d9e6f2; /* Cor do texto do label */
+  margin-bottom: 8px;
+  display: block;
+}
+
+.dropdown {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 2px solid #4bc3cc; /* Cor da borda */
+  background-color: #0d161f;
+  color: #d9e6f2; /* Texto branco */
+  font-family: 'Rubik', sans-serif;
+  font-size: 16px;
+  cursor: pointer;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.dropdown:hover, .dropdown:focus {
+  border-color: #0f4e72; /* Mudança de cor ao passar o mouse */
+  background-color: rgba(15, 78, 114, 0.8); /* Fundo levemente mais escuro */
+  outline: none;
+}
+
+.file-drop-area {
+  border: 2px dashed #4bc3cc; /* Borda pontilhada */
+  border-radius: 8px;
+  padding: 20px;
+  color: #d9e6f2;
+  font-size: 16px;
+  font-family: 'Rubik', sans-serif;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.file-drop-area:hover {
+  background-color: rgba(75, 195, 204, 0.2); /* Fundo mais escuro */
+  border-color: #0f4e72; /* Cor da borda ao passar o mouse */
+}
+
+.file-name {
+  display: block;
+  font-size: 14px;
+  color: #c5d9e4;
+  font-family: 'Rubik', sans-serif;
+  margin-top: 10px;
+  text-align: left; /* Alinhamento do texto */
+}
+
+.modal-buttons {
+  margin-top: 20px;
+}
+
+.modal-open {
+  padding: 10px 20px;
+  background-color: #0f4e72;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-family: 'Rubik', sans-serif;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.modal-open:hover {
+  background-color: #01315b;
+}
+
+
+

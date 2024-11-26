@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contabilize Bem</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Rubik:wght@400;500&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="home.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Contabilize Bem</h1>
+      <div class="user-area">
+        <div class="user-icon"></div>
+        <span class="user-name">Usuário</span>
+        <button class="share-button">Compartilhar</button>
+      </div>
+    </header>
+    
+    <main>
+      <div class="header-content">
+        
+        
+      </div>
+      
+      <div class="content">
+        <!-- Últimos Arquivos -->
+        <div class="section files">
+          <h3>Últimos arquivos enviados</h3>
+          <div class="file-item">
+            <div class="file-icon"></div>
+            <div class="file-name">
+              <span>Bens</span>
+              <span>aluguel.pdf</span>
+            </div>
+          </div>
+          <div class="file-item">
+            <div class="file-icon"></div>
+            <div class="file-name">
+              <span>Despesas Dedutíveis</span>
+              <span>aluguel.pdf</span>
+            </div>
+          </div>
+          <div class="file-item">
+            <div class="file-icon"></div>
+            <div class="file-name">
+              <span>Bens</span>
+              <span>aluguel.pdf</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Informações Financeiras -->
+        <div class="section info">
+          <div class="info-item">
+            <h3>Despesas Dedutíveis</h3>
+            <span class="info-value">14</span>
+            <button class="info-icon" onclick="openModal()">+</button>
+          </div>
+          <div class="info-item">
+            <h3>Despesas Dedutíveis</h3>
+            <span class="info-value">18</span>
+            <button class="info-icon" onclick="openModal()">+</button>
+          </div>
+          <div class="info-item">
+            <h3>Renda</h3>
+            <input type="text" id="incomeInput" class="info-input" placeholder="R$ 0,00" oninput="formatCurrency(this)">
+            <div class="info-icon" onclick="toggleVisibility()">
+                <i class="fas fa-eye" id="eyeIcon"></i>
+            </div>
+          </div>
+          <div class="info-item">
+            <h3>Bens</h3>
+            <span class="info-value">4</span>
+            <button class="info-icon" onclick="openModal()">+</button>
+          </div>
+          <button class="explore-item">
+            <span>Explorar Tudo</span>
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <div class="modal" id="uploadModal" style="display: none;">
+      <div class="modal-content">
+        <span class="close-modal" onclick="closeModal()">&times;</span>
+        <h3>Faça o upload de um arquivo</h3>
+    
+        <!-- Dropdown para Categorias -->
+        <div class="dropdown-container">
+          <label for="categorySelect" class="dropdown-label">Selecione uma categoria:</label>
+          <select id="categorySelect" class="dropdown">
+            <option value="" disabled selected>Escolha uma categoria</option>
+            <option value="financeiro">Financeiro</option>
+            <option value="marketing">Marketing</option>
+            <option value="tecnologia">Tecnologia</option>
+            <option value="recursos-humanos">Recursos Humanos</option>
+          </select>
+        </div>
+    
+        <!-- Área de Upload -->
+        <div class="file-drop-area" id="fileDropArea" onclick="triggerFileInput()">
+          <span>clique para ecolher seu arquivo</span>
+          <input type="file" id="fileInput" style="display: none;" onchange="showFileName()">
+        </div>
+        <span id="fileName" class="file-name">Nenhum arquivo escolhido</span>
+    
+        <!-- Botões -->
+        <div class="modal-buttons">
+          <button class="modal-open" onclick="uploadFile()">Enviar</button>
+        </div>
+      </div>
+    </div>
+    
+
+    <script>
+// Função para abrir o modal
+function openModal() {
+  document.getElementById('uploadModal').style.display = 'flex';
+}
+
+// Função para fechar o modal
+function closeModal() {
+  document.getElementById('uploadModal').style.display = 'none';
+}
+
+// Função para exibir o nome do arquivo selecionado
+function showFileName() {
+  const fileInput = document.getElementById('fileInput');
+  const fileName = fileInput.files[0] ? fileInput.files[0].name : "Nenhum arquivo escolhido";
+  document.getElementById('fileName').textContent = fileName;
+}
+
+function openModal() {
+  document.getElementById('uploadModal').style.display = 'flex';
+}
+
+function closeModal() {
+  document.getElementById('uploadModal').style.display = 'none';
+}
+
+function triggerFileInput() {
+  document.getElementById('fileInput').click();
+}
+
+function showFileName() {
+  const fileInput = document.getElementById('fileInput');
+  const fileName = fileInput.files[0] ? fileInput.files[0].name : "Nenhum arquivo escolhido";
+  document.getElementById('fileName').textContent = fileName;
+}
+
+function uploadFile() {
+  const fileInput = document.getElementById('fileInput');
+  const category = document.getElementById('categorySelect').value;
+
+  if (!category) {
+    alert("Por favor, selecione uma categoria.");
+    return;
+  }
+
+  const file = fileInput.files[0];
+  if (file) {
+    alert(`Arquivo "${file.name}" enviado com sucesso na categoria "${category}".`);
+    closeModal();
+  } else {
+    alert("Por favor, selecione um arquivo.");
+  }
+}
+
+
+// Função para alternar a visibilidade de valores (se necessário para outro campo)
+let isMasked = false;
+let actualValue = '';
+
+function toggleVisibility() {
+  const input = document.getElementById('incomeInput');
+  const eyeIcon = document.getElementById('eyeIcon');
+  
+  if (isMasked) {
+    input.value = actualValue;
+    eyeIcon.classList.remove('fa-eye-slash');
+    eyeIcon.classList.add('fa-eye');
+  } else {
+    actualValue = input.value;
+    input.value = '*****';
+    eyeIcon.classList.remove('fa-eye');
+    eyeIcon.classList.add('fa-eye-slash');
+  }
+  
+  isMasked = !isMasked;
+}
+
+// Função para formatar moeda
+function formatCurrency(input) {
+  if (isMasked) return;
+
+  let value = parseFloat(input.value.replace(/\D/g, '')) / 100;
+  actualValue = value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+  input.value = actualValue;
+}
+document.querySelector('.share-button').addEventListener('click', function () {
+    const url = window.location.href; // Obtém a URL atual
+
+    // Verifica se a API Web Share é suportada
+    if (navigator.share) {
+      navigator
+        .share({
+          title: 'Contabilize Bem',
+          text: 'Confira esta página do Contabilize Bem!',
+          url: url, // URL a ser compartilhada
+        })
+        .then(() => console.log('Compartilhamento realizado com sucesso!'))
+        .catch((error) =>
+          console.error('Erro ao compartilhar via API Web Share:', error)
+        );
+    } else {
+      // Se a API Web Share não for suportada, copia o link
+      navigator.clipboard
+        .writeText(url)
+        .then(() => {
+          alert(
+            'Link copiado para a área de transferência! Compartilhe manualmente.'
+          );
+        })
+        .catch((err) => {
+          console.error('Erro ao copiar o link:', err);
+          alert('Não foi possível copiar o link.');
+        });
+    }
+  });
+
+    </script>
+    <footer>
+      <p>2024 Contabilize Bem. Todos direitos reservados</p>
+    </footer>
+  </div>
+</body>
+</html>
