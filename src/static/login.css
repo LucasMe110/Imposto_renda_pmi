@@ -173,7 +173,7 @@ max-width: 100%; /* Garante que as imagens não ultrapassem o tamanho do contêi
 height: auto; /* Mantém a proporção das imagens */
 /* Adicione margens ou padding se precisar de espaçamento adicional em torno das imagens */
 }
-
+/* Remove o estilo padrão do navegador */
     
 
 }
