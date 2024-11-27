@@ -11,9 +11,6 @@
 <body>
   <div class="container">
     <header> 
-
-      <p>Código gerado: {{ codigo }}</p>
-
   <h1>Contabilize Bem</h1>
   <div class="user-area">
     <span class="user-name">{{current_user.nome}}</span>
@@ -21,7 +18,7 @@
     <div class="settings-container">
       <i class="fas fa-cog settings-icon" onclick="toggleSettingsMenu()"></i>
       <div class="settings-menu hidden">
-        <button class="logout-button">Sair</button>
+        <a class="logout-button" href="{{ url_for('index') }}">Sair</a>
       </div>
     </div>
   </div>
@@ -68,7 +65,7 @@
             <button class="info-icon" onclick="openModal()">+</button>
           </div>
           <div class="info-item">
-            <h3>Despesas Dedutíveis</h3>
+            <h3>Gastos Tributáveis</h3>
             <span class="info-value">18</span>
             <button class="info-icon" onclick="openModal()">+</button>
           </div>
