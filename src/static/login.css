@@ -10,7 +10,8 @@ body {
 }
 .e23_17 {
     color: rgba(255, 255, 255, 1);
-    font-family: 'Fredoka One', sans-serif;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold; /* Negrito */
     font-size: 32px;
     position: absolute;
     left: 221px;

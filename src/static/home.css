@@ -26,9 +26,12 @@ header {
   align-items: center;
 }
 
-header h1 {
-  font-family: 'Fredoka One', sans-serif;
+.main-title {
+  font-family: 'Montserrat', sans-serif;
   font-size: 32px;
+  color: #ffffff;
+  text-align: center;
+  margin-top: 20px;
 }
 
 .user-area {
