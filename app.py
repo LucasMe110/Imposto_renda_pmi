@@ -8,8 +8,7 @@ from src.config.config import Config
 import random
 from src.models.usuario import Classe
 from src.models.usuario import Notas
-
-
+from src.services.gerar_link import gerar_string_com_id
 
 app = Flask(__name__, static_folder='src/static', template_folder='src/templates')
 lm = LoginManager(app)
@@ -18,10 +17,55 @@ app.config.from_object(Config)
 
 db.init_app(app)
 
+@app.route("/gerar_codigo_usuario", methods=["GET"])  # Alterado o endpoint
+@login_required
+def gerar_codigo_usuario():  # Nome da função alterado para evitar conflito
+    # Obtém o ID do usuário atual
+    usuario_id = current_user.id
+    # Gera o código com base no ID do usuário
+    codigo = gerar_string_com_id(usuario_id)
+    print(codigo)
+    return f"Código gerado: {codigo}"
+
 
 @app.route("/front")
 def front():
     return render_template('main.html')
+
+@app.route("/gerar_codigo", methods=["GET"])
+@login_required
+def gerar_codigo():
+    # Obtém o ID do usuário atual
+    usuario_id = current_user.id
+    # Gera o código com base no ID do usuário
+    codigo = gerar_string_com_id(usuario_id)
+    return f"Código gerado: {codigo}"
+
+@app.route("/compartilhado/<string:codigo>")
+def compartilhado(codigo):
+
+    try:
+        # Extrai o ID: começa no 7º caractere e termina antes da próxima letra
+        id_usuario = ""
+        print(codigo)
+        for char in codigo[6:]:  # Começa no 7º caractere
+            if char.isdigit():
+                id_usuario += char
+            else:
+                break  # Para ao encontrar a próxima letra
+            print(id_usuario)
+        id_usuario = int(id_usuario)  # Converte para inteiro
+        
+    except ValueError:
+        return "Código inválido.", 400
+
+    # Busca o usuário no banco de dados
+    usuario = db.session.query(Usuario).filter_by(id=id_usuario).first()
+
+    if not usuario:
+        return f"Usuário com ID {id_usuario} não encontrado.", 404
+
+    return render_template("compartilhado.html", usuario=usuario)
 
 
 @lm.user_loader
@@ -38,11 +82,16 @@ def logout():
     logout_user()
     return redirect(url_for('login'))
 
-@app.route("/home", methods=['POST', 'GET'])
+@app.route("/home", methods=['GET'])
 @login_required
 def home():
-    print(current_user)
-    return render_template('home.html')
+    # Obtém o ID do usuário atual
+    usuario_id = current_user.id
+    # Gera o código com base no ID do usuário
+    codigo = gerar_string_com_id(usuario_id)
+    # Renderiza o template com o código gerado
+    return render_template('home.html', codigo=codigo)
+
 
 #@app.route("/upload", methods=['POST', 'GET'])
 #@login_required

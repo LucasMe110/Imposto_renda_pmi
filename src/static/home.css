@@ -356,3 +356,54 @@ footer {
 .modal-open:hover {
   background-color: #01315b;
 }
+/* Estilo para o ícone de engrenagem */
+.settings-container {
+  position: relative;
+  display: inline-block;
+  margin-left: 10px;
+}
+
+.settings-icon {
+  font-size: 20px;
+  color: white;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.settings-icon:hover {
+  transform: rotate(90deg);
+}
+
+/* Menu de configurações */
+.settings-menu {
+  position: absolute;
+  top: 30px;
+  right: 0;
+  background-color: rgba(34, 41, 55, 0.9);
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  z-index: 100;
+}
+
+.settings-menu.hidden {
+  display: none;
+}
+
+/* Botão de sair */
+.logout-button {
+  background-color: #386182;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-family: 'Rubik', sans-serif;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+  background-color: #cc0000;
+}
