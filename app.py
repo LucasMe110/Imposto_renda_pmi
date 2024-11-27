@@ -40,9 +40,15 @@ def home():
     print(current_user)
     return render_template('home.html')
 
+@app.route("/upload")
+@login_required
+def upload():
+    print(current_user)
+    return render_template('upload.html')
+
 @app.route("/")
 def index():
-    return render_template('index.html')  # Renderiza o index.html com os links
+    return render_template('index.html')  
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
@@ -58,7 +64,7 @@ def login():
             return render_template('login.html', error_message=error_message)
 
         login_user(user)
-        return redirect(url_for('test'))  # Assegure-se de que 'test' é um endpoint válido
+        return redirect(url_for('home'))
 
 @app.route("/criar_conta")
 def criar_conta():

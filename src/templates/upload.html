@@ -4,14 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contabilize Bem</title>
-  <link rel="stylesheet" href="upload.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='upload.css') }}">
 </head>
 <body>
   <div class="container">
     <header>
       <h1>Contabilize Bem</h1>
       <div class="user-area">
-        <div class="user-icon"></div>
         <span class="user-name">Usuário</span>
         <button class="share-button">Compartilhar</button>
       </div>
@@ -81,6 +80,6 @@
     </div>
   </div>
 
-  <script src="upload.js"></script>
+  <script src="{{ url_for('static', filename='upload.js') }}"></script>
 </body>
 </html>
