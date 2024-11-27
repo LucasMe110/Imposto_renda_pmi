@@ -17,16 +17,6 @@
             <h2>Verifique Seu Código</h2>
             <p>Insira o código de acesso que você acabou de receber no seu endereço {{ email }}</p>
 
-            <!-- Exibir mensagens de flash -->
-            {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                    <ul class="flashed-messages">
-                        {% for category, message in messages %}
-                            <p style="color:red;" class="{{ category }}">{{ message }}</p>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
-            {% endwith %}
 
             <!-- Formulário para verificação do código -->
             <form action="{{ url_for('verify_email') }}" method="POST">

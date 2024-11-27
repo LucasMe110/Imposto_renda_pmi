@@ -99,4 +99,109 @@ p {
     cursor: pointer;
     text-align: center;
 }
-/* Remove o estilo padrão do navegador */
+/* Container de regras de senha */
+#password-rules {
+    background-color: #ffffff; /* Fundo branco */
+    border: 1px solid #d6d8da; /* Borda leve */
+    border-radius: 6px; /* Bordas arredondadas */
+    padding: 10px 15px; /* Espaçamento interno */
+    font-size: 14px; /* Tamanho da fonte */
+    font-family: 'Rubik', sans-serif;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    display: none; /* Inicialmente escondido */
+    position: absolute; /* Posicionamento absoluto */
+    left: calc(100% + 10px); /* Posicionado ao lado direito do campo */
+    top: 50%; /* Alinhamento vertical ao centro */
+    transform: translateY(-50%); /* Ajusta o alinhamento vertical */
+    z-index: 10; /* Garante que esteja acima de outros elementos */
+    white-space: nowrap; /* Evita quebra de linha */
+    width: max-content; /* Ajusta a largura conforme o conteúdo */
+    transition: opacity 0.3s ease, transform 0.3s ease; /* Transições suaves */
+}
+
+/* Regras individuais */
+#password-rules p {
+    margin: 5px 0;
+    color: #dc3545; /* Vermelho inicial para regras não atendidas */
+    transition: color 0.3s ease; /* Transição para verde quando atendida */
+}
+
+/* Regras atendidas */
+#password-rules p.valid {
+    color: #28a745; /* Verde para regras atendidas */
+    font-weight: bold;
+}
+
+/* Mostrar regras */
+#password-rules.visible {
+    display: block;
+    opacity: 1;
+    transform: translateY(-50%); /* Exibição natural */
+}
+
+/* Esconder regras */
+#password-rules.hidden {
+    display: none;
+    opacity: 0;
+    transform: translateY(-60px); /* Move para cima ao esconder */
+}
+
+/* Campo de senha com foco */
+#senha:focus {
+    outline: none; /* Remove contorno padrão */
+    box-shadow: none; /* Sem sombra */
+}
+
+/* Ajuste para o contêiner do grupo de entrada */
+.input-group {
+    position: relative; /* Define um contexto de posicionamento */
+}
+
+
+/* Mensagem de erro para senhas não coincidentes */
+.mismatch-message {
+    color: #dc3545; /* Vermelho */
+    font-size: 14px;
+    font-family: 'Rubik', sans-serif;
+    display: none; /* Inicialmente escondida */
+    animation: fadeIn 0.3s ease;
+    position: absolute; /* Posicionamento absoluto */
+    right: -200px; /* Ajuste de distância horizontal */
+    top: 50%; /* Alinha verticalmente ao centro */
+    transform: translateY(-50%); /* Corrige o alinhamento */
+    white-space: nowrap; /* Evita quebra de linha */
+    background-color: #ffffff; /* Fundo branco */
+    padding: 5px 10px; /* Espaçamento interno */
+    border: 1px solid #e0e0e0; /* Borda leve */
+    border-radius: 5px; /* Bordas arredondadas */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+/* Exibir mensagem de erro */
+.mismatch-message.show {
+    display: inline-block;
+}
+
+/* Animação suave */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Ajustes para o input-group */
+.input-group {
+    position: relative; /* Define um contexto para posicionamento */
+}
+.brand-name {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 30px;
+    margin-left: 20px;
+    margin-top: 25px;
+    color: white;
+}

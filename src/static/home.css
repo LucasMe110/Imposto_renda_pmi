@@ -246,7 +246,6 @@ footer {
   transform: translateY(-2px);
   opacity: 0.9;
 }
-/* Estilos para o modal */
 .modal {
   display: none;
   position: fixed;
@@ -255,20 +254,21 @@ footer {
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.8); /* Fundo escuro e semi-transparente */
   justify-content: center;
   align-items: center;
 }
 
 .modal-content {
-  background-color: #fff;
+  background-color: #0d161f; /* Fundo do modal */
+  color: #fff; /* Texto branco para contraste */
   padding: 30px;
   border-radius: 10px;
   width: 400px;
   text-align: center;
   position: relative;
   font-family: 'Rubik', sans-serif;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); /* Sombra para profundidade */
 }
 
 .close-modal {
@@ -276,87 +276,56 @@ footer {
   top: 10px;
   right: 10px;
   font-size: 24px;
-  color: #333;
+  color: #d9e6f2;
   cursor: pointer;
 }
 
-h3 {
-  font-size: 20px;
-  color: #ffffff;
+.dropdown-container {
+  margin: 20px 0;
+  text-align: left;
 }
 
-.custom-file-upload {
-  display: inline-block;
-  padding: 10px 20px;
-  cursor: pointer;
-  color: #ffffff;
-  background: linear-gradient(0deg, #2C79ED 0%, #4BC3CC 100%);
-  border: none;
-  border-radius: 8px;
+.dropdown-label {
   font-size: 16px;
-  font-family: 'Rubik', sans-serif;
-  margin-top: 10px;
-  transition: background-color 0.3s ease;
+  color: #d9e6f2; /* Cor do texto do label */
+  margin-bottom: 8px;
+  display: block;
 }
-/* Estilos para o modal */
-/* Estilos para o modal */
-.modal {
-  display: none; /* Escondido por padrão */
-  position: fixed;
-  z-index: 1000;
-  left: 0;
-  top: 0;
+
+.dropdown {
   width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.767); /* Fundo semi-transparente */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.modal-content {
-  background-color: #0d161f; /* Cor similar ao azul escuro do layout */
-  padding: 30px;
-  border-radius: 12px;
-  width: 400px;
-  text-align: center;
-  position: relative;
+  padding: 10px;
+  border-radius: 8px;
+  border: 2px solid #4bc3cc; /* Cor da borda */
+  background-color: #0d161f;
+  color: #d9e6f2; /* Texto branco */
   font-family: 'Rubik', sans-serif;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra para profundidade */
-  color: #ffffff; /* Texto branco */
-}
-
-.modal-content h3 {
-  font-size: 20px;
-  color: #d9e6f2;
-  margin-bottom: 20px;
-}
-
-.close-modal {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 24px;
-  color: #d9e6f2;
+  font-size: 16px;
   cursor: pointer;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.dropdown:hover, .dropdown:focus {
+  border-color: #0f4e72; /* Mudança de cor ao passar o mouse */
+  background-color: rgba(15, 78, 114, 0.8); /* Fundo levemente mais escuro */
+  outline: none;
 }
 
 .file-drop-area {
-  border: 2px dashed #4bc3cc;
+  border: 2px dashed #4bc3cc; /* Borda pontilhada */
   border-radius: 8px;
   padding: 20px;
   color: #d9e6f2;
   font-size: 16px;
+  font-family: 'Rubik', sans-serif;
+  text-align: center;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin-bottom: 20px; /* Espaço abaixo para o nome do arquivo */
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .file-drop-area:hover {
-  background-color: rgba(75, 195, 204, 0.1);
+  background-color: rgba(75, 195, 204, 0.2); /* Fundo mais escuro */
+  border-color: #0f4e72; /* Cor da borda ao passar o mouse */
 }
 
 .file-name {
@@ -364,13 +333,12 @@ h3 {
   font-size: 14px;
   color: #c5d9e4;
   font-family: 'Rubik', sans-serif;
-  margin-top: 10px; /* Espaçamento acima do nome do arquivo */
+  margin-top: 10px;
+  text-align: left; /* Alinhamento do texto */
 }
 
 .modal-buttons {
   margin-top: 20px;
-  display: flex;
-  justify-content: center;
 }
 
 .modal-open {
@@ -380,6 +348,7 @@ h3 {
   border: none;
   border-radius: 8px;
   font-size: 16px;
+  font-family: 'Rubik', sans-serif;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }

@@ -33,7 +33,8 @@
             <span class="e23_198">Entrar</span>
     </form>
     {% if error_message %}
-        <p style="color:red;">{{ error_message }}</p>
+    <p id="error-message" style="display: none;">{{ error_message }}</p>
+
     {% endif %}
     <a href="{{ url_for('criar_conta') }}" class="e60_24">Não tem uma conta?</a>
     <button type="submit" class="e23_200">Entrar</button> <!-- Certifique-se de que o botão está dentro do formulário -->
@@ -57,8 +58,22 @@
             this.classList.toggle('fa-eye', isPasswordVisible);  // Mostra o olho aberto se a senha for visível
             this.classList.toggle('fa-eye-slash', !isPasswordVisible); // Mostra o olho fechado se a senha não for visível
         });
+
+        function showError(message) {
+    const errorMessage = document.getElementById('error-message');
+    errorMessage.textContent = message; // Define a mensagem
+    errorMessage.style.display = 'block'; // Torna visível
+
+    // Remove a mensagem após 5 segundos
+    setTimeout(() => {
+        errorMessage.style.display = 'none';
+    }, 3000);
+}
+
+// Exemplo de uso
+showError("Email ou senha incorreto");
+
     </script>
 </body>
 
 </html>
-// Define o ícone correto com base na visibilidade da senha

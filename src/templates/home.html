@@ -81,37 +81,58 @@
         </div>
       </div>
     </main>
-
-    <div class="modal" id="uploadModal" style="display: none;">
-      <div class="modal-content">
-        <span class="close-modal" onclick="closeModal()">&times;</span>
-        <h3>Faça o upload de um arquivo</h3>
+    <form action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data">
+      <div class="modal" id="uploadModal" style="display: none;">
+        <div class="modal-content">
+          <span class="close-modal" onclick="closeModal()">&times;</span>
+          <h3>Faça o upload de um arquivo</h3>
     
-        <!-- Dropdown para Categorias -->
-        <div class="dropdown-container">
-          <label for="categorySelect" class="dropdown-label">Selecione uma categoria:</label>
-          <select id="categorySelect" class="dropdown">
-            <option value="" disabled selected>Escolha uma categoria</option>
-            <option value="financeiro">Financeiro</option>
-            <option value="marketing">Marketing</option>
-            <option value="tecnologia">Tecnologia</option>
-            <option value="recursos-humanos">Recursos Humanos</option>
-          </select>
-        </div>
+          <!-- Dropdown para Categorias -->
+          <div class="dropdown-container">
+            <label for="categorySelect" class="dropdown-label">Selecione uma categoria:</label>
+            <select id="categorySelect" name="categoria" class="dropdown" required>
+              <option value="" disabled selected>Escolha uma categoria</option>
+              <option value="financeiro">Financeiro</option>
+              <option value="Marketing">Marketing</option>
+              <option value="tecnologia">Tecnologia</option>
+              <option value="recursos-humanos">Recursos Humanos</option>
+            </select>
+          </div>
     
-        <!-- Área de Upload -->
-        <div class="file-drop-area" id="fileDropArea" onclick="triggerFileInput()">
-          <span>clique para ecolher seu arquivo</span>
-          <input type="file" id="fileInput" style="display: none;" onchange="showFileName()">
-        </div>
-        <span id="fileName" class="file-name">Nenhum arquivo escolhido</span>
+          <!-- Área de Upload -->
+          <div class="file-drop-area" id="fileDropArea" onclick="triggerFileInput()">
+            <span>Clique para escolher seu arquivo</span>
+            <input 
+              type="file" 
+              id="fileInput" 
+              name="arquivo" 
+              style="display: none;" 
+              onchange="showFileName()" 
+              required>
+          </div>
+          <span id="fileName" class="file-name">Nenhum arquivo escolhido</span>
     
-        <!-- Botões -->
-        <div class="modal-buttons">
-          <button class="modal-open" onclick="uploadFile()">Enviar</button>
+          <!-- Botões -->
+          <div class="modal-buttons">
+            <button type="submit" class="modal-open">Enviar</button>
+          </div>
         </div>
       </div>
-    </div>
+    </form>
+    
+    
+    <script>
+      function triggerFileInput() {
+        document.getElementById('fileInput').click();
+      }
+    
+      function showFileName() {
+        const fileInput = document.getElementById('fileInput');
+        const fileName = fileInput.files[0]?.name || 'Nenhum arquivo escolhido';
+        document.getElementById('fileName').textContent = fileName;
+      }
+    </script>
+    
     
 
     <script>

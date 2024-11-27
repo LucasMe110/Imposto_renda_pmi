@@ -177,3 +177,17 @@ height: auto; /* Mantém a proporção das imagens */
     
 
 }
+#error-message {
+    position: fixed; /* Fixa a posição na tela */
+    bottom: 20px; /* Distância do canto inferior */
+    right: 20px; /* Distância do canto direito */
+    background-color: white; /* Fundo branco */
+    color: red; /* Cor do texto */
+    padding: 10px 15px; /* Espaçamento interno */
+    border: 1px solid #ccc; /* Borda leve */
+    border-radius: 5px; /* Bordas arredondadas */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    font-family: 'Rubik', sans-serif; /* Fonte elegante */
+    font-size: 14px; /* Tamanho da fonte */
+    z-index: 1000; /* Garantir que fique acima de outros elementos */
+}

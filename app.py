@@ -6,6 +6,10 @@ from src.forms.validators import validar_formulario, salvar_dados_na_sessao, sal
 from src.services.send_verification_email import send_verification_email  # Corrigido para incluir o prefixo 'src'
 from src.config.config import Config
 import random
+from src.models.usuario import Classe
+from src.models.usuario import Notas
+
+
 
 app = Flask(__name__, static_folder='src/static', template_folder='src/templates')
 lm = LoginManager(app)
@@ -34,21 +38,85 @@ def logout():
     logout_user()
     return redirect(url_for('login'))
 
-@app.route("/home")
+@app.route("/home", methods=['POST', 'GET'])
 @login_required
 def home():
     print(current_user)
     return render_template('home.html')
 
-@app.route("/upload")
-@login_required
-def upload():
-    print(current_user)
-    return render_template('upload.html')
+#@app.route("/upload", methods=['POST', 'GET'])
+#@login_required
+#def upload():
+#    print(current_user)
+#    return render_template('upload.html')
 
 @app.route("/")
 def index():
     return render_template('index.html')  
+
+@app.route('/upload', methods=['POST', 'GET'])
+@login_required
+def upload():
+    # Verifica se os campos obrigatórios foram enviados
+    if 'arquivo' not in request.files or 'categoria' not in request.form:
+        flash("Arquivo e categoria são obrigatórios.", "error")
+        print("Erro: Arquivo ou categoria não enviados.")
+        return redirect(request.url)
+
+    arquivo = request.files['arquivo']
+    categoria_nome = request.form['categoria']
+
+    # Verifica se o arquivo tem um nome válido
+    if arquivo.filename == '':
+        flash("Nenhum arquivo selecionado.", "error")
+        print("Erro: Nenhum arquivo selecionado.")
+        return redirect(request.url)
+
+    # Lê o conteúdo do arquivo como binário
+    binario = arquivo.read()
+    print(f"Arquivo recebido: {arquivo.filename}")
+    print(f"Categoria recebida: {categoria_nome}")
+    print(f"Conteúdo binário do arquivo (primeiros 50 bytes): {binario[:50]}...")
+
+    # Verifica ou cria a categoria
+    categoria = Classe.query.filter_by(nome=categoria_nome).first()
+    if not categoria:
+        print(f"Categoria '{categoria_nome}' não encontrada. Criando nova categoria.")
+        categoria = Classe(nome=categoria_nome)
+        db.session.add(categoria)
+        db.session.commit()
+    else:
+        print(f"Categoria '{categoria_nome}' encontrada: ID {categoria.id}")
+
+    # Cria a nova entrada na tabela Notas
+    usuario_atual = current_user  # Usuário autenticado
+    nova_nota = Notas(
+        usuario_id=usuario_atual.id, 
+        classe_id=categoria.id, 
+        binario=binario
+    )
+
+    # Adiciona e salva no banco de dados
+    try:
+        db.session.add(nova_nota)
+        db.session.commit()
+
+        # Consulta o registro recém-criado no banco de dados
+        nota_salva = Notas.query.filter_by(id=nova_nota.id).first()
+        if nota_salva:
+            print(f"Nota salva no banco: ID {nota_salva.id}, UsuarioID {nota_salva.usuario_id}, ClasseID {nota_salva.classe_id}")
+        else:
+            print("Erro: Nota não encontrada no banco após commit.")
+
+        flash("Arquivo enviado e armazenado com sucesso.", "success")
+    except Exception as e:
+        db.session.rollback()
+        print("Erro ao salvar no banco de dados:", e)
+        flash("Erro ao salvar o arquivo no banco de dados.", "error")
+        return redirect(request.url)
+
+    return redirect(url_for('home'))
+
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
@@ -114,7 +182,7 @@ def verify_email():
             usuario = salvar_usuario_no_bd()
             if usuario:
                 login_user(usuario)  # Autentica o usuário após cadastro
-                return redirect(url_for('index'))
+                return redirect(url_for('login'))
             else:
                 flash('Erro ao salvar o usuário no banco de dados.', 'error')
         else:
