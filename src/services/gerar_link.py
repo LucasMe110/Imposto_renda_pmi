@@ -15,7 +15,7 @@ def gerar_string_com_id(usuario_id):
     # Gera outra letra aleatória
     letra2 = random.choice(string.ascii_letters)
     # Gera 4 caracteres aleatórios
-    quatro_caracteres = ''.join(random.choices(string.ascii_letters + string.digits, k=4))
+    quatro_caracteres = ''.join(random.choices(string.ascii_letters + string.ascii_letters, k=4))
     # Concatena tudo com o prefixo
     resultado = f"compartilhado/{cinco_caracteres}{letra1}{id_usuario}{letra2}{quatro_caracteres}"
     return resultado

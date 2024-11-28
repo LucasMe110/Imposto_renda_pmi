@@ -32,22 +32,30 @@
       
       <div class="content">
         <!-- Últimos Arquivos -->
-        <div class="section files">
-          <h3>Últimos arquivos enviados</h3>
-          <div class="file-item">
-            <div class="file-icon"></div>
-            <div class="file-name">
-              <span>Bens</span>
-              <span>aluguel.pdf</span>
+<div class="section files">
+            <h3>Últimos arquivos enviados</h3>
+            <div class="file-item">
+                {% if 'bens' in imagens_por_classe %}
+                    <img src="data:image/png;base64,{{ imagens_por_classe['bens'] }}" class="file-icon">
+                {% else %}
+                    <div class="file-icon default-icon"></div>
+                {% endif %}
+                <div class="file-name">
+                    <span>Bens</span>
+                </div>
             </div>
+
+            <div class="file-item">
+              {% if 'despesas dedutiveis' in imagens_por_classe %}
+                  <img src="data:image/png;base64,{{ imagens_por_classe['despesas dedutiveis'] }}" class="file-icon">
+              {% else %}
+                  <div class="file-icon default-icon"></div>
+              {% endif %}
+              <div class="file-name">
+                  <span>Despesas Dedutíveis</span>
+              </div>
           </div>
-          <div class="file-item">
-            <div class="file-icon"></div>
-            <div class="file-name">
-              <span>Despesas Dedutíveis</span>
-              <span>aluguel.pdf</span>
-            </div>
-          </div>
+          
           <div class="file-item">
             <div class="file-icon"></div>
             <div class="file-name">

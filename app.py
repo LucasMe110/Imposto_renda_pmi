@@ -80,33 +80,37 @@ def logout():
 def home():
     usuario_id = current_user.id
     
-    # Consulta para contar o número de notas por classe
-    contagem = db.session.query(
-        Classe.nome, 
-        db.func.count(Notas.id).label('quantidade')
+    # Consulta para contar o número de notas por classe e pegar imagens associadas
+    notas = db.session.query(
+        Classe.nome,
+        Notas.binario
     ).join(Notas, Classe.id == Notas.classe_id)\
      .filter(Notas.usuario_id == usuario_id)\
-     .group_by(Classe.nome)\
      .all()
     
-    # Normaliza os nomes das categorias
-    contagem_classes = {classe.lower(): quantidade for classe, quantidade in contagem}
+    imagens_por_classe = {}
+    for classe_nome, binario in notas:
+        if classe_nome not in imagens_por_classe and binario:
+            # Pega apenas a primeira imagem por classe, convertendo para Base64
+            imagens_por_classe[classe_nome.lower()] = base64.b64encode(binario).decode('utf-8')
     
-    # Mapeia para os nomes esperados
+    contagem_classes = {
+        classe.lower(): sum(1 for c, _ in notas if c.lower() == classe.lower())
+        for classe, _ in notas
+    }
+    
     bens = contagem_classes.get("bens", 0)
     despesas_dedutiveis = contagem_classes.get("despesas dedutiveis", 0)
     gastos_tributaveis = contagem_classes.get("gastos tributaveis", 0)
     
-    print("Valores individuais - Bens:", bens, "Despesas Dedutíveis:", despesas_dedutiveis, "Gastos Tributáveis:", gastos_tributaveis)
-    usuario_id = current_user.id
-    codigo = gerar_string_com_id(usuario_id)
     return render_template(
         'home.html', 
-        codigo=codigo,
+        imagens_por_classe=imagens_por_classe,
         bens=bens, 
         despesas_dedutiveis=despesas_dedutiveis, 
         gastos_tributaveis=gastos_tributaveis
     )
+
 
 
 
