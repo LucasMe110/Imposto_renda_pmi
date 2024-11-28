@@ -1,16 +1,269 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalhes do Usuário</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contabilize Bem</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='notas.css') }}">
 </head>
 <body>
-    <h1>Detalhes do Usuário</h1>
-    <p><strong>ID:</strong> {{ usuario.id }}</p>
-    <p><strong>Nome:</strong> {{ usuario.nome }}</p>
-    <p><strong>Email:</strong> {{ usuario.email }}</p>
-    <p><strong>Data de Nascimento:</strong> {{ usuario.data_nascimento }}</p>
-    <!-- Adicione outros campos relevantes aqui -->
+  <div class="container">
+    <header>
+      <h1>Contabilize Bem</h1>
+      <div class="user-area">
+      </div>
+    </header>
+
+    <main>
+      <div class="header-content">
+        <h2>Arquivos </h2>
+        <div class="filter-container">
+          <!-- Botão para mostrar todas as imagens -->
+          <button class="filter-button" onclick="filterImages('all')">Todos</button>
+          <!-- Botões de filtro para cada categoria -->
+          {% for categoria in categorias %}
+            <button class="filter-button" onclick="filterImages('{{ categoria }}')">{{ categoria }}</button>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="button-container">
+
+
+        
+      </div>
+
+      <div class="content">
+        {% if arquivos|length == 0 %}
+          <div id="noFilesMessage" class="no-files-message">Nenhuma imagem adicionada ainda</div>
+        {% else %}
+          <div class="drive-content" id="imageGallery">
+            <!-- Renderização das imagens -->
+            {% for arquivo in arquivos %}
+            <div class="file-item" data-file-id="{{ arquivo.id }}" data-category="{{ arquivo.categoria }}">
+              <img src="{{ arquivo.url }}" alt="{{ arquivo.nome }}" onclick="openImageModal('{{ arquivo.url }}')">
+              
+          </div>
+          
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+    </main>
+    
+    <div class="modal" id="uploadModal" style="display: none;">
+      <form action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data">
+        <div class="modal-content">
+          <span class="close-modal" onclick="closeModal()">&times;</span>
+          <h3>Faça o upload de um arquivo</h3>
+    
+          <!-- Dropdown para Categorias -->
+          <div class="dropdown-container">
+            <label for="categorySelect" class="dropdown-label">Selecione uma categoria:</label>
+            <select id="categorySelect" name="categoria" class="dropdown" required>
+              <option value="" disabled selected>Escolha uma categoria</option>
+              <option value="despesas dedutiveis">Despesas Dedutíveis</option>
+              <option value="gastos tributaveis">Gastos Tributáveis</option>
+              <option value="bens">Bens</option>
+              
+            </select>
+          </div>
+    
+          <!-- Área de Upload -->
+          <div class="file-drop-area" id="fileDropArea" onclick="triggerFileInput()">
+            <span>Clique para escolher seu arquivo</span>
+            <input 
+              type="file" 
+              id="fileInput" 
+              name="arquivo" 
+              accept=".jpg, .jpeg, .png, .pdf" 
+              style="display: none;" 
+              onchange="showFileName()" 
+              required>
+          </div>
+          <span id="fileName" class="file-name">Nenhum arquivo escolhido</span>
+    
+          <!-- Botões -->
+          <div class="modal-buttons">
+            <button type="submit" class="modal-open">Enviar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    
+
+    <!-- Modal de Visualização -->
+<div class="modal" id="imageModal">
+  <div class="modal-content">
+    <span class="close-modal" onclick="closeImageModal()">&#10006;</span>
+    <img id="modalImage" alt="Imagem Visualizada">
+    <div class="modal-actions">
+      <button class="delete-button" onclick="deleteCurrentImage()">Excluir</button>
+      <button class="download-button" onclick="downloadImage()">Download</button>
+    </div>
+  </div>
+</div>
+
+  <script>
+    let selectedImageElement = null;
+
+function filterImages(category) {
+  const items = document.querySelectorAll('.file-item');
+  items.forEach(item => {
+    if (category === "all" || item.dataset.category === category) {
+      item.style.display = "block";
+    } else {
+      item.style.display = "none";
+    }
+  });
+}
+
+function openModal() {
+  document.getElementById('uploadModal').style.display = 'flex';
+}
+
+function closeModal() {
+  document.getElementById('uploadModal').style.display = 'none';
+}
+
+function showFileName() {
+  const fileInput = document.getElementById('fileInput');
+  const fileName = fileInput.files[0] ? fileInput.files[0].name : "Nenhum arquivo escolhido";
+  document.getElementById('fileName').textContent = fileName;
+}
+
+function uploadFile() {
+  const fileInput = document.getElementById('fileInput');
+  const file = fileInput.files[0];
+  const gallery = document.getElementById('imageGallery');
+  const noFilesMessage = document.getElementById('noFilesMessage');
+
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      const div = document.createElement('div');
+      div.className = 'file-item';
+      div.dataset.category = document.getElementById('categorySelect').value;
+      div.innerHTML = `
+        <img src="${e.target.result}" onclick="viewImage(this)">
+        <span>${file.name}</span>
+      `;
+      gallery.appendChild(div);
+      noFilesMessage.style.display = 'none';
+    };
+    reader.readAsDataURL(file);
+    closeModal();
+  } else {
+    alert("Por favor, selecione um arquivo.");
+  }
+}
+
+function openImageModal(imageUrl) {
+  const modal = document.getElementById('imageModal');
+  const modalImage = document.getElementById('modalImage');
+  modalImage.src = imageUrl;
+
+  // Define o elemento atualmente selecionado
+  const allItems = document.querySelectorAll('.file-item img');
+  selectedImageElement = Array.from(allItems).find(img => img.src === imageUrl);
+
+  modal.style.display = 'flex';
+}
+
+function closeImageModal() {
+  document.getElementById('imageModal').style.display = 'none';
+}
+
+function openModal() {
+  document.getElementById('uploadModal').style.display = 'flex';
+}
+
+
+function deleteCurrentImage() {
+    if (!selectedImageElement) return;
+
+    const fileId = selectedImageElement.parentElement.dataset.fileId; // Obtém o ID
+    if (!fileId) {
+        alert('ID do arquivo não encontrado!');
+        return;
+    }
+
+    fetch('/delete_file', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ file_id: fileId }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.message) {
+            selectedImageElement.parentElement.remove();
+            document.getElementById('imageModal').style.display = 'none';
+
+            const gallery = document.getElementById('imageGallery');
+            if (!gallery.children.length) {
+                document.getElementById('noFilesMessage').style.display = 'block';
+            }
+        } else {
+            alert(data.error || 'Erro ao excluir o arquivo.');
+        }
+    })
+    .catch(() => alert('Erro ao conectar com o servidor.'));
+}
+
+
+function triggerFileInput() {
+  document.getElementById('fileInput').click();
+}
+function downloadImage() {
+  if (!selectedImageElement) return;
+
+  const imageUrl = selectedImageElement.src;
+  const fileName = selectedImageElement.parentElement.querySelector('span')?.textContent || 'downloaded_image.png';
+
+  // Cria um link temporário para download
+  const link = document.createElement('a');
+  link.href = imageUrl;
+  link.download = fileName;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+// Lógica de compartilhamento
+document.querySelector('.share-button').addEventListener('click', function () {
+        const textoCompartilhar = 'Confira o Contabilize Bem! Este é um texto personalizado.';
+        const linkCompartilhar = "{{ codigo }}"; // Link vindo do back-end
+        
+        // Verifica se a API Web Share é suportada
+        if (navigator.share) {
+          navigator
+            .share({
+              title: 'Contabilize Bem',
+              text: textoCompartilhar,
+              url: linkCompartilhar, // Passa o link dinâmico aqui
+            })
+            .then(() => console.log('Compartilhamento realizado com sucesso!'))
+            .catch((error) =>
+              console.error('Erro ao compartilhar via API Web Share:', error)
+            );
+        } else {
+          // Se a API Web Share não for suportada, copia o texto + link
+          const textoCompleto = `${textoCompartilhar} ${linkCompartilhar}`;
+          navigator.clipboard
+            .writeText(textoCompleto)
+            .then(() => {
+              alert(
+                'Texto e link copiados para a área de transferência! Compartilhe manualmente.'
+              );
+            })
+            .catch((err) => {
+              console.error('Erro ao copiar o texto:', err);
+              alert('Não foi possível copiar o texto.');
+            });
+        }
+      });
+
+  </script>
 </body>
 </html>

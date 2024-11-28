@@ -31,31 +31,62 @@ with app.app_context():
 
 
 
-@app.route("/compartilhado/<string:codigo>")
+@app.route("/compartilhado/<string:codigo>", methods=['GET'])
+@login_required
 def compartilhado(codigo):
+    usuario_id = current_user.id  # Obtém o ID do usuário autenticado
 
     try:
-        # Extrai o ID: começa no 7º caractere e termina antes da próxima letra
-        id_usuario = ""
-        print(codigo)
+        # Extrai o ID do usuário compartilhado do código
+        id_compartilhado = ""
         for char in codigo[6:]:  # Começa no 7º caractere
             if char.isdigit():
-                id_usuario += char
+                id_compartilhado += char
             else:
                 break  # Para ao encontrar a próxima letra
-            print(id_usuario)
-        id_usuario = int(id_usuario)  # Converte para inteiro
+        id_compartilhado = int(id_compartilhado)  # Converte para inteiro
         
     except ValueError:
         return "Código inválido.", 400
 
-    # Busca o usuário no banco de dados
-    usuario = db.session.query(Usuario).filter_by(id=id_usuario).first()
+    # Busca o usuário compartilhado no banco de dados
+    usuario_compartilhado = db.session.query(Usuario).filter_by(id=id_compartilhado).first()
 
-    if not usuario:
-        return f"Usuário com ID {id_usuario} não encontrado.", 404
+    if not usuario_compartilhado:
+        return f"Usuário com ID {id_compartilhado} não encontrado.", 404
 
-    return render_template("compartilhado.html", usuario=usuario)
+    # Suponha que o compartilhamento envolva "notas" ou algo relacionado ao usuário compartilhado
+    notas = db.session.query(Notas, Classe.nome).join(Classe, Notas.classe_id == Classe.id).filter(
+        Notas.usuario_id == id_compartilhado
+    ).all()
+
+    # Processa as notas e organiza as informações
+    arquivos = []
+    categorias = set()
+
+    for nota, categoria in notas:
+        categorias.add(categoria)  # Adiciona a categoria
+        if nota.binario:
+            # Converte para Base64
+            imagem_base64 = base64.b64encode(nota.binario).decode('utf-8')
+            arquivos.append({
+                'url': f"data:image/png;base64,{imagem_base64}",
+                'nome': f"Arquivo {nota.id}",
+                'categoria': categoria,
+                'id': nota.id  # Adiciona o ID aqui
+            })
+
+    # Prepara a lista de categorias para filtros
+    categorias = list(categorias)
+
+    return render_template(
+        'compartilhado.html',
+        usuario_compartilhado=usuario_compartilhado,
+        arquivos=arquivos,
+        categorias=categorias,
+        categorias_dropdown=[{'value': cat, 'label': cat} for cat in categorias]  # Para o dropdown
+    )
+
 
 
 @app.route('/logout')
@@ -65,15 +96,7 @@ def logout():
     return redirect(url_for('login'))
 
 
-#@app.route("/home", methods=['GET'])
-#@login_required
-#def home():
-#    # Obtém o ID do usuário atual
-    usuario_id = current_user.id
-    # Gera o código com base no ID do usuário
-   #codigo = gerar_string_com_id(usuario_id)
-    #Renderiza o template com o código gerado
-#    return render_template('home.html', codigo=codigo)
+
 
 @app.route("/home", methods=['GET'])
 @login_required
@@ -148,7 +171,7 @@ def delete_file():
 @login_required
 def notas():
     usuario_id = current_user.id
-    
+    codigo = gerar_string_com_id(usuario_id)
     # Consulta as notas do usuário
     notas = db.session.query(Notas, Classe.nome).join(Classe, Notas.classe_id == Classe.id).filter(
         Notas.usuario_id == usuario_id
@@ -175,6 +198,7 @@ def notas():
 
     return render_template(
         'notas.html',
+        codigo=codigo,
         arquivos=arquivos,
         categorias=categorias,
         categorias_dropdown=[{'value': cat, 'label': cat} for cat in categorias]  # Para o dropdown
@@ -190,7 +214,6 @@ def upload():
     # Verifica se os campos obrigatórios foram enviados
     if 'arquivo' not in request.files or 'categoria' not in request.form:
         flash("Arquivo e categoria são obrigatórios.", "error")
-        print("Erro: Arquivo ou categoria não enviados.")
         return redirect(request.url)
 
     arquivo = request.files['arquivo']
@@ -199,24 +222,17 @@ def upload():
     # Verifica se o arquivo tem um nome válido
     if arquivo.filename == '':
         flash("Nenhum arquivo selecionado.", "error")
-        print("Erro: Nenhum arquivo selecionado.")
         return redirect(request.url)
 
     # Lê o conteúdo do arquivo como binário
     binario = arquivo.read()
-    print(f"Arquivo recebido: {arquivo.filename}")
-    print(f"Categoria recebida: {categoria_nome}")
-    print(f"Conteúdo binário do arquivo (primeiros 50 bytes): {binario[:50]}...")
 
     # Verifica ou cria a categoria
     categoria = Classe.query.filter_by(nome=categoria_nome).first()
     if not categoria:
-        print(f"Categoria '{categoria_nome}' não encontrada. Criando nova categoria.")
         categoria = Classe(nome=categoria_nome)
         db.session.add(categoria)
         db.session.commit()
-    else:
-        print(f"Categoria '{categoria_nome}' encontrada: ID {categoria.id}")
 
     # Cria a nova entrada na tabela Notas
     usuario_atual = current_user  # Usuário autenticado
@@ -234,18 +250,16 @@ def upload():
         # Consulta o registro recém-criado no banco de dados
         nota_salva = Notas.query.filter_by(id=nova_nota.id).first()
         if nota_salva:
-            print(f"Nota salva no banco: ID {nota_salva.id}, UsuarioID {nota_salva.usuario_id}, ClasseID {nota_salva.classe_id}")
-        else:
-            print("Erro: Nota não encontrada no banco após commit.")
+            pass  # Pode adicionar ações ou logs específicos aqui se necessário
 
         flash("Arquivo enviado e armazenado com sucesso.", "success")
     except Exception as e:
         db.session.rollback()
-        print("Erro ao salvar no banco de dados:", e)
         flash("Erro ao salvar o arquivo no banco de dados.", "error")
         return redirect(request.url)
 
     return redirect(url_for('home'))
+
 
 
 @app.route("/login", methods=['GET', 'POST'])
