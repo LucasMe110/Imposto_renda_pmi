@@ -6,7 +6,8 @@ app = Flask(__name__)
 # Configurações do banco de dados MySQL
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:12345@localhost:3306/bin'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
+mysql+pymysql://root:12345@localhost:3306/bin
+mysql+pymysql://root:SenhaForte10@pmicesusc:us-central1:contabilizebem2024:0/prod
 # Inicializa o banco de dados
 db = SQLAlchemy(app)
 

@@ -61,12 +61,12 @@
         <div class="section info">
           <div class="info-item">
             <h3>Despesas Dedutíveis</h3>
-            <span class="info-value">14</span>
+            <span class="info-value">{{despesas_dedutiveis}}</span>
             <button class="info-icon" onclick="openModal()">+</button>
           </div>
           <div class="info-item">
             <h3>Gastos Tributáveis</h3>
-            <span class="info-value">18</span>
+            <span class="info-value">{{gastos_tributaveis}}</span>
             <button class="info-icon" onclick="openModal()">+</button>
           </div>
           <div class="info-item">
@@ -78,11 +78,11 @@
           </div>
           <div class="info-item">
             <h3>Bens</h3>
-            <span class="info-value">4</span>
+            <span class="info-value">{{bens}}</span>
             <button class="info-icon" onclick="openModal()">+</button>
           </div>
           <button class="explore-item">
-            <span>Explorar Tudo</span>
+            <a href="{{ url_for('notas') }}" style="color: white; text-decoration: none;">Explorar Tudo</a>
           </button>
         </div>
       </div>

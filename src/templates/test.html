@@ -15,6 +15,13 @@
     <p>{{current_user.cpf}}</p>
     <p>test:</p>
 
+
+    <ul>
+        {% for classe, quantidade in contagem_classes.items() %}
+            <li>{{ quantidade }}</li>
+        {% endfor %}
+    </ul>
+
     <a href="{{ url_for('logout') }}">sair</a> 
 </body>
 </html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notas</title>
+</head>
+<body>
+    <h1>Minhas Notas</h1>
+    <div class="notas-container">
+        {% for imagem in imagens %}
+            <div class="nota">
+                <img src="data:image/png;base64,{{ imagem }}" alt="Nota">
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, url_for, redirect, flash, session
+from flask import Flask, render_template, request, url_for, redirect, flash, session, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from src.models.usuario import Usuario, db  # Corrigido para incluir o prefixo 'src'
@@ -9,7 +9,7 @@ import random
 from src.models.usuario import Classe
 from src.models.usuario import Notas
 from src.services.gerar_link import gerar_string_com_id
-
+import base64
 
 
 app = Flask(__name__, static_folder='src/static', template_folder='src/templates')
@@ -19,20 +19,15 @@ app.config.from_object(Config)
 
 db.init_app(app)
 
-@app.route("/gerar_codigo_usuario", methods=["GET"])  # Alterado o endpoint
-@login_required
-def gerar_codigo_usuario():  # Nome da função alterado para evitar conflito
-    # Obtém o ID do usuário atual
-    usuario_id = current_user.id
-    # Gera o código com base no ID do usuário
-    codigo = gerar_string_com_id(usuario_id)
-    print(codigo)
-    return f"Código gerado: {codigo}"
+@lm.user_loader
+def user_loader(id):
+    usuario = db.session.query(Usuario).filter_by(id=id).first()
+    return usuario
+
+with app.app_context():
+    db.create_all()
 
 
-@app.route("/front")
-def front():
-    return render_template('main.html')
 
 
 
@@ -63,38 +58,123 @@ def compartilhado(codigo):
     return render_template("compartilhado.html", usuario=usuario)
 
 
-@lm.user_loader
-def user_loader(id):
-    usuario = db.session.query(Usuario).filter_by(id=id).first()
-    return usuario
-
-with app.app_context():
-    db.create_all()
-
 @app.route('/logout')
 @login_required  
 def logout():
     logout_user()
     return redirect(url_for('login'))
 
+
+#@app.route("/home", methods=['GET'])
+#@login_required
+#def home():
+#    # Obtém o ID do usuário atual
+    usuario_id = current_user.id
+    # Gera o código com base no ID do usuário
+   #codigo = gerar_string_com_id(usuario_id)
+    #Renderiza o template com o código gerado
+#    return render_template('home.html', codigo=codigo)
+
 @app.route("/home", methods=['GET'])
 @login_required
 def home():
-    # Obtém o ID do usuário atual
     usuario_id = current_user.id
-    # Gera o código com base no ID do usuário
+    
+    # Consulta para contar o número de notas por classe
+    contagem = db.session.query(
+        Classe.nome, 
+        db.func.count(Notas.id).label('quantidade')
+    ).join(Notas, Classe.id == Notas.classe_id)\
+     .filter(Notas.usuario_id == usuario_id)\
+     .group_by(Classe.nome)\
+     .all()
+    
+    # Normaliza os nomes das categorias
+    contagem_classes = {classe.lower(): quantidade for classe, quantidade in contagem}
+    
+    # Mapeia para os nomes esperados
+    bens = contagem_classes.get("bens", 0)
+    despesas_dedutiveis = contagem_classes.get("despesas dedutiveis", 0)
+    gastos_tributaveis = contagem_classes.get("gastos tributaveis", 0)
+    
+    print("Valores individuais - Bens:", bens, "Despesas Dedutíveis:", despesas_dedutiveis, "Gastos Tributáveis:", gastos_tributaveis)
+    usuario_id = current_user.id
     codigo = gerar_string_com_id(usuario_id)
-    # Renderiza o template com o código gerado
-    return render_template('home.html', codigo=codigo)
+    return render_template(
+        'home.html', 
+        codigo=codigo,
+        bens=bens, 
+        despesas_dedutiveis=despesas_dedutiveis, 
+        gastos_tributaveis=gastos_tributaveis
+    )
 
 
-@app.route("/notas", methods=['POST', 'GET'])
+
+
+
+
+
+@app.route('/delete_file', methods=['POST'])
+@login_required
+def delete_file():
+    data = request.get_json()
+    file_id = data.get('file_id')
+
+    if not file_id:
+        return jsonify({"error": "ID do arquivo não fornecido"}), 400
+
+    # Localiza e exclui a imagem
+    nota = Notas.query.filter_by(id=file_id, usuario_id=current_user.id).first()
+    if nota:
+        try:
+            db.session.delete(nota)
+            db.session.commit()
+            return jsonify({"message": "Arquivo excluído com sucesso!"}), 200
+        except Exception as e:
+            db.session.rollback()
+            return jsonify({"error": "Erro ao excluir o arquivo"}), 500
+    else:
+        return jsonify({"error": "Arquivo não encontrado"}), 404
+
+
+
+
+
+@app.route("/notas", methods=['GET'])
 @login_required
 def notas():
-    # Consulta as notas enviadas pelo usuário atual
-    notas_usuario = Notas.query.filter_by(usuario_id=current_user.id).all()
+    usuario_id = current_user.id
     
-    return render_template('notas.html', notas=notas_usuario)
+    # Consulta as notas do usuário
+    notas = db.session.query(Notas, Classe.nome).join(Classe, Notas.classe_id == Classe.id).filter(
+        Notas.usuario_id == usuario_id
+    ).all()
+    
+    # Prepara os dados para o template
+    arquivos = []
+    categorias = set()
+    
+    for nota, categoria in notas:
+        categorias.add(categoria)  # Adiciona a categoria
+        if nota.binario:
+            # Converte para Base64
+            imagem_base64 = base64.b64encode(nota.binario).decode('utf-8')
+            arquivos.append({
+                'url': f"data:image/png;base64,{imagem_base64}",
+                'nome': f"Arquivo {nota.id}",
+                'categoria': categoria,
+                'id': nota.id  # Adiciona o ID aqui
+            })
+    
+    # Prepara a lista de categorias para filtros
+    categorias = list(categorias)
+
+    return render_template(
+        'notas.html',
+        arquivos=arquivos,
+        categorias=categorias,
+        categorias_dropdown=[{'value': cat, 'label': cat} for cat in categorias]  # Para o dropdown
+    )
 
 @app.route("/")
 def index():

@@ -20,6 +20,9 @@
       <div class="header-content">
         <h2>Meus Arquivos</h2>
         <div class="filter-container">
+          <!-- Botão para mostrar todas as imagens -->
+          <button class="filter-button" onclick="filterImages('all')">Todos</button>
+          <!-- Botões de filtro para cada categoria -->
           {% for categoria in categorias %}
             <button class="filter-button" onclick="filterImages('{{ categoria }}')">{{ categoria }}</button>
           {% endfor %}
@@ -27,7 +30,19 @@
       </div>
 
       <div class="button-container">
-        <button class="back-button" onclick="goBack()">&#8592;</button>
+        <a href="{{ url_for('home') }}" class="back-button">&#8592;</a>
+
+<style>
+  .back-button {
+    text-decoration: none; /* Remove o sublinhado */
+    color: white; /* Define o texto como branco */
+    font-size: 16px; /* Ajuste o tamanho do texto, se necessário */
+  }
+
+  .back-button:hover {
+    color: #f0f0f0; /* (Opcional) Alteração de cor ao passar o mouse */
+  }
+</style>
         <button class="add-button" onclick="openModal()">+</button>
       </div>
 
@@ -36,11 +51,13 @@
           <div id="noFilesMessage" class="no-files-message">Nenhuma imagem adicionada ainda</div>
         {% else %}
           <div class="drive-content" id="imageGallery">
+            <!-- Renderização das imagens -->
             {% for arquivo in arquivos %}
-              <div class="file-item">
-                <img src="{{ arquivo.url }}" alt="{{ arquivo.nome }}" onclick="openImageModal('{{ arquivo.url }}')">
-                <span>{{ arquivo.nome }}</span>
-              </div>
+            <div class="file-item" data-file-id="{{ arquivo.id }}" data-category="{{ arquivo.categoria }}">
+              <img src="{{ arquivo.url }}" alt="{{ arquivo.nome }}" onclick="openImageModal('{{ arquivo.url }}')">
+              <span>{{ arquivo.nome }}</span>
+          </div>
+          
             {% endfor %}
           </div>
         {% endif %}
@@ -88,6 +105,115 @@
     </div>
   </div>
 
-  <script src="{{ url_for('static', filename='notas.js') }}"></script>
+  <script>
+    let selectedImageElement = null;
+
+function filterImages(category) {
+  const items = document.querySelectorAll('.file-item');
+  items.forEach(item => {
+    if (category === "all" || item.dataset.category === category) {
+      item.style.display = "block";
+    } else {
+      item.style.display = "none";
+    }
+  });
+}
+
+function openModal() {
+  document.getElementById('uploadModal').style.display = 'flex';
+}
+
+function closeModal() {
+  document.getElementById('uploadModal').style.display = 'none';
+}
+
+function showFileName() {
+  const fileInput = document.getElementById('fileInput');
+  const fileName = fileInput.files[0] ? fileInput.files[0].name : "Nenhum arquivo escolhido";
+  document.getElementById('fileName').textContent = fileName;
+}
+
+function uploadFile() {
+  const fileInput = document.getElementById('fileInput');
+  const file = fileInput.files[0];
+  const gallery = document.getElementById('imageGallery');
+  const noFilesMessage = document.getElementById('noFilesMessage');
+
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      const div = document.createElement('div');
+      div.className = 'file-item';
+      div.dataset.category = document.getElementById('categorySelect').value;
+      div.innerHTML = `
+        <img src="${e.target.result}" onclick="viewImage(this)">
+        <span>${file.name}</span>
+      `;
+      gallery.appendChild(div);
+      noFilesMessage.style.display = 'none';
+    };
+    reader.readAsDataURL(file);
+    closeModal();
+  } else {
+    alert("Por favor, selecione um arquivo.");
+  }
+}
+
+function openImageModal(imageUrl) {
+  const modal = document.getElementById('imageModal');
+  const modalImage = document.getElementById('modalImage');
+  modalImage.src = imageUrl;
+
+  // Define o elemento atualmente selecionado
+  const allItems = document.querySelectorAll('.file-item img');
+  selectedImageElement = Array.from(allItems).find(img => img.src === imageUrl);
+
+  modal.style.display = 'flex';
+}
+
+function closeImageModal() {
+  document.getElementById('imageModal').style.display = 'none';
+}
+
+function deleteCurrentImage() {
+    if (!selectedImageElement) return;
+
+    const fileId = selectedImageElement.parentElement.dataset.fileId; // Obtém o ID
+    if (!fileId) {
+        alert('ID do arquivo não encontrado!');
+        return;
+    }
+
+    fetch('/delete_file', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ file_id: fileId }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.message) {
+            selectedImageElement.parentElement.remove();
+            document.getElementById('imageModal').style.display = 'none';
+
+            const gallery = document.getElementById('imageGallery');
+            if (!gallery.children.length) {
+                document.getElementById('noFilesMessage').style.display = 'block';
+            }
+        } else {
+            alert(data.error || 'Erro ao excluir o arquivo.');
+        }
+    })
+    .catch(() => alert('Erro ao conectar com o servidor.'));
+}
+
+
+function triggerFileInput() {
+  document.getElementById('fileInput').click();
+}
+
+
+  </script>
 </body>
 </html>

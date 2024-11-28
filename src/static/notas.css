@@ -9,6 +9,13 @@ body {
   flex-direction: column;
 }
 
+.file-item img {
+  max-width: 150px; /* Define a largura máxima */
+  max-height: 150px; /* Define a altura máxima */
+  object-fit: cover; /* Ajusta a imagem para caber dentro do limite */
+  border: 1px solid #ccc; /* Opcional: adiciona uma borda */
+  border-radius: 5px; /* Opcional: adiciona cantos arredondados */
+}
 
 
 .container {
