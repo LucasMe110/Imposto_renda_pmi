@@ -98,10 +98,9 @@
             <label for="categorySelect" class="dropdown-label">Selecione uma categoria:</label>
             <select id="categorySelect" name="categoria" class="dropdown" required>
               <option value="" disabled selected>Escolha uma categoria</option>
-              <option value="financeiro">Financeiro</option>
-              <option value="Marketing">Marketing</option>
-              <option value="tecnologia">Tecnologia</option>
-              <option value="recursos-humanos">Recursos Humanos</option>
+              <option value="despesas dedutiveis">Despesas Dedutíveis</option>
+              <option value="gastos tributaveis">Gastos Tributáveis</option>
+              <option value="bens">Bens</option>
             </select>
           </div>
     
@@ -112,6 +111,7 @@
               type="file" 
               id="fileInput" 
               name="arquivo" 
+              accept=".jpg, .jpeg, .png, .pdf" 
               style="display: none;" 
               onchange="showFileName()" 
               required>

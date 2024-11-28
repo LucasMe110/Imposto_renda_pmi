@@ -30,5 +30,12 @@ class Notas(db.Model):
     classe_id = db.Column(db.Integer, db.ForeignKey('Classe.id', ondelete='CASCADE'), nullable=False)
     binario = db.Column(db.LargeBinary, nullable=False)
 
-    usuario = db.relationship('Usuario', backref=db.backref('notas', cascade='all, delete'))
-    classe = db.relationship('Classe', backref=db.backref('notas', cascade='all, delete'))
+    # Relacionamentos para compatibilidade com MySQL
+    usuario = db.relationship(
+        'Usuario',
+        backref=db.backref('notas', cascade='all, delete-orphan', passive_deletes=True)
+    )
+    classe = db.relationship(
+        'Classe',
+        backref=db.backref('notas', cascade='all, delete-orphan', passive_deletes=True)
+    )

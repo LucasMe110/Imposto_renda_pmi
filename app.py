@@ -10,6 +10,8 @@ from src.models.usuario import Classe
 from src.models.usuario import Notas
 from src.services.gerar_link import gerar_string_com_id
 
+
+
 app = Flask(__name__, static_folder='src/static', template_folder='src/templates')
 lm = LoginManager(app)
 lm.login_view = 'login'
@@ -32,14 +34,7 @@ def gerar_codigo_usuario():  # Nome da função alterado para evitar conflito
 def front():
     return render_template('main.html')
 
-@app.route("/gerar_codigo", methods=["GET"])
-@login_required
-def gerar_codigo():
-    # Obtém o ID do usuário atual
-    usuario_id = current_user.id
-    # Gera o código com base no ID do usuário
-    codigo = gerar_string_com_id(usuario_id)
-    return f"Código gerado: {codigo}"
+
 
 @app.route("/compartilhado/<string:codigo>")
 def compartilhado(codigo):
@@ -93,11 +88,13 @@ def home():
     return render_template('home.html', codigo=codigo)
 
 
-#@app.route("/upload", methods=['POST', 'GET'])
-#@login_required
-#def upload():
-#    print(current_user)
-#    return render_template('upload.html')
+@app.route("/notas", methods=['POST', 'GET'])
+@login_required
+def notas():
+    # Consulta as notas enviadas pelo usuário atual
+    notas_usuario = Notas.query.filter_by(usuario_id=current_user.id).all()
+    
+    return render_template('notas.html', notas=notas_usuario)
 
 @app.route("/")
 def index():

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contabilize Bem</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='notas.css') }}">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Contabilize Bem</h1>
+      <div class="user-area">
+        <span class="user-name">{{ current_user.nome }}</span>
+        <button class="share-button">Compartilhar</button>
+      </div>
+    </header>
+
+    <main>
+      <div class="header-content">
+        <h2>Meus Arquivos</h2>
+        <div class="filter-container">
+          {% for categoria in categorias %}
+            <button class="filter-button" onclick="filterImages('{{ categoria }}')">{{ categoria }}</button>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="button-container">
+        <button class="back-button" onclick="goBack()">&#8592;</button>
+        <button class="add-button" onclick="openModal()">+</button>
+      </div>
+
+      <div class="content">
+        {% if arquivos|length == 0 %}
+          <div id="noFilesMessage" class="no-files-message">Nenhuma imagem adicionada ainda</div>
+        {% else %}
+          <div class="drive-content" id="imageGallery">
+            {% for arquivo in arquivos %}
+              <div class="file-item">
+                <img src="{{ arquivo.url }}" alt="{{ arquivo.nome }}" onclick="openImageModal('{{ arquivo.url }}')">
+                <span>{{ arquivo.nome }}</span>
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+    </main>
+
+    <!-- Modal de Upload -->
+    <div class="modal" id="uploadModal" style="display: none;">
+      <div class="modal-content">
+        <span class="close-modal" onclick="closeModal()">&times;</span>
+        <h3>Faça o upload de um arquivo</h3>
+
+        <!-- Dropdown para Categorias -->
+        <div class="dropdown-container">
+          <label for="categorySelect" class="dropdown-label">Selecione uma categoria:</label>
+          <select id="categorySelect" class="dropdown">
+            <option value="" disabled selected>Escolha uma categoria</option>
+            {% for categoria in categorias_dropdown %}
+              <option value="{{ categoria.value }}">{{ categoria.label }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <!-- Área de Upload -->
+        <div class="file-drop-area" id="fileDropArea" onclick="triggerFileInput()">
+          <span>Clique para escolher seu arquivo</span>
+          <input type="file" id="fileInput" style="display: none;" onchange="showFileName()">
+        </div>
+        <span id="fileName" class="file-name">Nenhum arquivo escolhido</span>
+
+        <!-- Botões -->
+        <div class="modal-buttons">
+          <button class="modal-open" onclick="uploadFile()">Enviar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal de Visualização -->
+    <div class="modal" id="imageModal">
+      <div class="modal-content">
+        <span class="close-modal" onclick="closeImageModal()">&#10006;</span>
+        <img id="modalImage" alt="Imagem Visualizada">
+        <button class="delete-button" onclick="deleteCurrentImage()">Excluir</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='notas.js') }}"></script>
+</body>
+</html>
