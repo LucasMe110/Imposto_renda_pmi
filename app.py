@@ -102,7 +102,7 @@ def logout():
 @login_required
 def home():
     usuario_id = current_user.id
-    
+    codigo = gerar_string_com_id(usuario_id)
     # Consulta para contar o número de notas por classe e pegar imagens associadas
     notas = db.session.query(
         Classe.nome,
@@ -131,7 +131,8 @@ def home():
         imagens_por_classe=imagens_por_classe,
         bens=bens, 
         despesas_dedutiveis=despesas_dedutiveis, 
-        gastos_tributaveis=gastos_tributaveis
+        gastos_tributaveis=gastos_tributaveis,
+        codigo=codigo
     )
 
 

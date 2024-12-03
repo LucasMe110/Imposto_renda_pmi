@@ -1,38 +1,34 @@
 # Contabilize Bem - PMI
-
 ## Link para visualização do site: [contabilizebem](https://contabilizebem.squareweb.app)
 
-## O'que é:
+## Aplicação de Organização Financeira e Documentos de IR
 
-Meu PMI consiste em desenvolver um sistema que organize dados fiscais de forma prática e eficiente. A ideia é criar um ambiente onde as pessoas possam adicionar e gerenciar suas informações fiscais de maneira estruturada, facilitando o trabalho dos contadores. Com isso, busco simplificar o acesso e a consulta de dados, minimizando erros e otimizando o tempo desses profissionais, o que contribui para um processo fiscal mais preciso e ágil. Esse sistema será entregue como um software completo, substituindo o trabalho tradicional de conclusão de curso.
+## Problema
+
+Manter recibos, controlar rendimentos e organizar documentos ao longo do ano pode ser um grande desafio. Muitas vezes, essas informações acabam se perdendo ou não estão acessíveis de maneira organizada, dificultando a gestão financeira pessoal e a preparação da declaração de Imposto de Renda (IR).
+
+## Solução
+
+A aplicação oferece um site intuitivo e eficiente para armazenar e organizar documentos relacionados ao IR ao longo do ano.
+
+### Benefícios:
+- **Economia de tempo**: Redução do esforço necessário para encontrar e reunir documentos importantes.
+- **Menos erros**: Minimização de equívocos na declaração de IR devido à centralização e organização dos dados.
+- **Organização financeira**: Melhor controle dos documentos e rendimentos pessoais.
+- **Facilidade para contadores**: Possibilidade de compartilhar os documentos organizados diretamente com o contador, simplificando o processo de análise.
+
+## Contexto do Projeto
+
+Este projeto foi desenvolvido como parte do **PMI** (Projeto Multidisciplinar Integrador) durante a Graduação em Análise e Desenvolvimento de Sistemas na **Universidade UNICESUSC**. 
+
+O **PMI** é uma disciplina que substitui o Trabalho de Conclusão de Curso (TCC). A matéria começa no primeiro semestre com a idealização do projeto, passando por etapas de planejamento e desenvolvimento, e termina com a entrega do **MVP** (Produto Mínimo Viável).
+
 
 ## Instalação
 Execute os seguintes comandos para instalar as dependências necessárias:
 
 ```r 
 - pip install -r requirements.txt
-```
-####  OU
-
-```r 
-- pip install Flask Flask-SQLAlchemy
-```
-```r
-- pip install SQLAlchemy
-```
-```r 
-- pip install numpy
-```
-```r 
-- pip install cryptography
-```
-
-```r 
-- pip install python-dotenv
-```
-
-```r 
--pip install flask-login
 ```
 
 ## Estrutura de Pastas
@@ -44,7 +40,7 @@ Execute os seguintes comandos para instalar as dependências necessárias:
         1. Adiciona usuários ao banco de dados.
 
 3. models
-    - Define a estrutura do banco de dados.
+    - Define a estrutura ORM do banco de dados.
 
 4. services
     - Funções úteis para o projeto.
@@ -53,15 +49,27 @@ Execute os seguintes comandos para instalar as dependências necessárias:
         3. password_validator: Verifica se a senha segue as diretrizes de segurança.
         4. send_verification_email: Envia o e-mail de verificação.
         5. idade: contem um calculo de idade.
+        6. gerar_link: gera o link de compartilhamento das notas fiscais 
 
 5. templates 
     - Arquivos do frontend (HTML).
 
 7. static
-    - Arquivos CSS e JavaScript(Voltado ao Front)
+    - Arquivos imagens, CSS e JavaScript(Voltado ao Front)
 
 6. sql
     - Scripts SQL.
+
+## Pasta /docs
+- Contem os seguites arquivos:
+1. Modelagem do Banco de dados | BD_modelagem.png
+2. Contrato do servido | CONTRATO DE ADESÃO DE USO DE APLICATIVO.docx
+3. Ponto de função | ponto-de-funcao.jpeg
+4. Slide | Slide.pdf
+
+## Modelagem Banco de Dados
+
+![Não encontrado](docs/BD_modelagem.png)
 
 
 ## Ponto de função:
@@ -85,7 +93,3 @@ Execute os seguintes comandos para instalar as dependências necessárias:
 - Eduardo Smyk:  
 [Github](https://github.com/Eduardosmyk)  
 [Linkedin](https://www.linkedin.com/in/eduardo-smyk-ba0a1a1b9/)
-
-
-
-gfdgdgfdgfdg
