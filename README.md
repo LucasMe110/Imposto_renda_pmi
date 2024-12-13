@@ -17,6 +17,36 @@ A aplicação oferece um site intuitivo e eficiente para armazenar e organizar d
 - **Organização financeira**: Melhor controle dos documentos e rendimentos pessoais.
 - **Facilidade para contadores**: Possibilidade de compartilhar os documentos organizados diretamente com o contador, simplificando o processo de análise.
 
+
+
+---
+
+## Capturas de Tela das Páginas
+
+### Página Inicial (`/`)
+![Página Inicial](docs/index.jpeg)
+
+### Página Compartilhado (`/compartilhado`)
+![Página Compartilhado](docs/compartilhado.jpeg)
+
+### Página Home (`/home`)
+![Página Home](docs/home.jpeg)
+
+### Página Notas (`/notas`)
+![Página Notas](docs/notas.jpeg)
+
+### Página Login (`/login`)
+![Página Login](docs/login.jpeg)
+
+### Página Criar Conta (`/criar_conta`)
+![Página Criar Conta](docs/criar_conta.jpeg)
+
+### Página Verificação de E-mail (`/verify_email`)
+![Página Verificação de E-mail](docs/verify_email.jpeg)
+
+---
+
+
 ## Contexto do Projeto
 
 Este projeto foi desenvolvido como parte do **PMI** (Projeto Multidisciplinar Integrador) durante a Graduação em Análise e Desenvolvimento de Sistemas na **Universidade UNICESUSC**. 
