@@ -26,9 +26,6 @@ A aplicação oferece um site intuitivo e eficiente para armazenar e organizar d
 ### Página Inicial (`/`)
 ![Página Inicial](docs/index.jpeg)
 
-### Página Compartilhado (`/compartilhado`)
-![Página Compartilhado](docs/compartilhado.jpeg)
-
 ### Página Home (`/home`)
 ![Página Home](docs/home.jpeg)
 
@@ -43,6 +40,9 @@ A aplicação oferece um site intuitivo e eficiente para armazenar e organizar d
 
 ### Página Verificação de E-mail (`/verify_email`)
 ![Página Verificação de E-mail](docs/verify_email.jpeg)
+
+### Página Compartilhado (`/compartilhado`)
+![Página Compartilhado](docs/compartilhado.jpeg)
 
 ---
 
