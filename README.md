@@ -1,21 +1,21 @@
 # Contabilize Bem - PMI
 ## Link: [contabilizebem](https://contabilizebem.squareweb.app)
 
-## A web app for organizing income tax documents and personal finances 
-## throughout the year, making it easier to prepare your annual tax return 
-## and share documents with your accountant.
+A web app for organizing income tax documents and personal finances 
+ throughout the year, making it easier to prepare your annual tax return 
+ and share documents with your accountant.
 
 ## Problem
 
-## Keeping track of receipts, income, and tax-related documents across the 
-## year is painful. Most people either lose documents or scramble to find 
-## everything at tax season.
+Keeping track of receipts, income, and tax-related documents across the 
+ year is painful. Most people either lose documents or scramble to find 
+ everything at tax season.
 
 ## Solution
 
-## A centralized platform where users can store, organize, and share their 
-## financial documents year-round. Built as a final degree project (equivalent 
-## to a thesis) at UNICESUSC.
+A centralized platform where users can store, organize, and share their 
+ financial documents year-round. Built as a final degree project (equivalent 
+ to a thesis) at UNICESUSC.
 
 ## Features
 
